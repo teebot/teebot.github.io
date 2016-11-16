@@ -371,24 +371,35 @@ html {
   box-sizing: inherit; }
 
 body {
-  background: #24286b;
+  background: #f7f2e6;
   font-family: "Muli", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 1em;
+  font-size: 1.2em;
   color: #333333; }
+
+.highlight {
+  padding: 12px;
+  border-radius: 5px; }
+
+h2 {
+  font-size: 3.5rem; }
 
 a {
   color: #313691;
   text-decoration: none; }
 
-#header, #footer {
+#footer {
   padding: 0 1.2em;
-  color: #f7f2e6; }
-  #header h1, #footer h1 {
+  color: #24286b;
+  text-align: right; }
+  #footer h1 {
     margin: 0;
     line-height: 1.8em; }
 
+#wrapper, #footer {
+  max-width: 1080px;
+  margin: 0 auto; }
+
 #wrapper {
-  background: #f7f2e6;
   display: flex; }
   #wrapper #main {
     flex: 8 0;
