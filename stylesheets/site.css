@@ -420,6 +420,10 @@ h1, h2 {
   #wrapper aside {
     flex: 1 1 auto;
     margin: 1.2em; }
+    #wrapper aside .profile-pic {
+      width: 140px;
+      border-radius: 80px;
+      border: 1px solid #313691; }
 
 .title-date {
   font-size: 0.3em;
