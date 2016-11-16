@@ -178,7 +178,6 @@
 }
     </style>
 
-    <!--<script src="/javascripts/all.js"></script>-->
   </head>
   <body>
     
@@ -189,7 +188,8 @@
         <div><a href="https://github.com/teebot/teebot.github.io/issues">Contact</a></div>
       </aside>
       <div id="main" role="main">
-        <p>So I&rsquo;m currently programming a lightweight utility to manage LDAP objects and I came to use the new <a href="http://msdn.microsoft.com/en-us/library/system.directoryservices.accountmanagement.aspx">AccountManagement API</a> introduced in .NET 3.5 because it&rsquo;s way easier and more object-oriented than <a href="http://msdn.microsoft.com/en-us/library/system.directoryservices.aspx">DirectoryServices</a>.  </p>
+          <h2>Setting AD Properties using the new AccountManagement API</h2>
+  <p>So I&rsquo;m currently programming a lightweight utility to manage LDAP objects and I came to use the new <a href="http://msdn.microsoft.com/en-us/library/system.directoryservices.accountmanagement.aspx">AccountManagement API</a> introduced in .NET 3.5 because it&rsquo;s way easier and more object-oriented than <a href="http://msdn.microsoft.com/en-us/library/system.directoryservices.aspx">DirectoryServices</a>.  </p>
 
 <p>This new namespace, as I see it, is just provided as a friendlier way to query an LDAP server and is actually built on top of the plain DirectoryServices bits. And it shows&hellip; For example you have to dispose all objects performing a search (FindIdentity) or as Gary Caldwell <a href="http://msdn.microsoft.com/en-us/library/bb345628.aspx">puts it</a>:  </p>
 
@@ -235,6 +235,7 @@
 <p><strong>NOTE: code indentation is messy in the examples. I need to fix something in my snippet tool.</strong>  </p>
 
 <p><a href="http://www.teebot.be/2009/12/ad-setting-custom-properties-using-new.html">CodeProject</a></p>
+
 
       </div>
     </div>

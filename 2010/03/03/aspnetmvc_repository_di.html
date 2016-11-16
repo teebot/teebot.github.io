@@ -178,7 +178,6 @@
 }
     </style>
 
-    <!--<script src="/javascripts/all.js"></script>-->
   </head>
   <body>
     
@@ -189,7 +188,8 @@
         <div><a href="https://github.com/teebot/teebot.github.io/issues">Contact</a></div>
       </aside>
       <div id="main" role="main">
-        <p>If you are already familiar with ASP.NET MVC, you have probably seen the <a href="http://martinfowler.com/eaaCatalog/repository.html">repository pattern</a> in a few examples (such as <a href="http://nerddinnerbook.s3.amazonaws.com/Intro.htm">NerdDinner</a>), maybe you even use it in your own app.  </p>
+          <h2>ASP.NET MVC, Injecting & Mocking an IRepository</h2>
+  <p>If you are already familiar with ASP.NET MVC, you have probably seen the <a href="http://martinfowler.com/eaaCatalog/repository.html">repository pattern</a> in a few examples (such as <a href="http://nerddinnerbook.s3.amazonaws.com/Intro.htm">NerdDinner</a>), maybe you even use it in your own app.  </p>
 
 <p>One of the most frequent way to hot-plug a Repository class into a controller is to use the Strategy Pattern. But while an application evolves, you might want to centrally manage your wiring within a provider, that&rsquo;s what Dependency Injectors are for.<br>
 However lots of Dependency Injectors - or IoC containers at large - such as Unity or Castle Windsor contain a plethora of features and often rely heavily on XML configuration, making them overkill for smaller projects.<br>
@@ -431,6 +431,7 @@ Notice how the kernel injects a mock in the controller and how we&rsquo;re then 
 
 <p>TeeBots-NET-Blog-ASPNET-MVC-Mocking-the-Repository-with-NinjectMoq)<br>
 <a href="http://www.teebot.be/2010/03/aspnet-mvc-and-ninject-repository.html">CodeProject</a></p>
+
 
       </div>
     </div>
