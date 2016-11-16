@@ -1,0 +1,441 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>teebot  - ASP.NET MVC, Injecting & Mocking an IRepository</title>
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/feed.xml" />
+
+    <link href='//fonts.googleapis.com/css?family=Muli:300,400' rel='stylesheet' type='text/css'>
+
+    <link href="/stylesheets/site.css" rel="stylesheet" />
+    <style>
+    .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight {
+  color: #faf6e4;
+  background-color: #122b3b;
+}
+.highlight .gl {
+  color: #dee5e7;
+  background-color: #4e5d62;
+}
+.highlight .c, .highlight .cd, .highlight .cm, .highlight .c1, .highlight .cs {
+  color: #6c8b9f;
+  font-style: italic;
+}
+.highlight .cp {
+  color: #b2fd6d;
+  font-weight: bold;
+  font-style: italic;
+}
+.highlight .err {
+  color: #fefeec;
+  background-color: #cc0000;
+}
+.highlight .gr {
+  color: #fefeec;
+  background-color: #cc0000;
+}
+.highlight .k, .highlight .kd, .highlight .kv {
+  color: #f6dd62;
+  font-weight: bold;
+}
+.highlight .o, .highlight .ow {
+  color: #4df4ff;
+}
+.highlight .p, .highlight .pi {
+  color: #4df4ff;
+}
+.highlight .gd {
+  color: #cc0000;
+}
+.highlight .gi {
+  color: #b2fd6d;
+}
+.highlight .ge {
+  font-style: italic;
+}
+.highlight .gs {
+  font-weight: bold;
+}
+.highlight .gt {
+  color: #dee5e7;
+  background-color: #4e5d62;
+}
+.highlight .kc {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .kn {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .kp {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .kr {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .gh {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .gu {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .kt {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .no {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nc {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nd {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nn {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .bp {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .ne {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nl {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .nt {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mb, .highlight .mx {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .ld {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .ss {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .s, .highlight .sb, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .sr, .highlight .s1 {
+  color: #fff0a6;
+  font-weight: bold;
+}
+.highlight .se {
+  color: #4df4ff;
+  font-weight: bold;
+}
+.highlight .sc {
+  color: #4df4ff;
+  font-weight: bold;
+}
+.highlight .si {
+  color: #4df4ff;
+  font-weight: bold;
+}
+.highlight .nb {
+  font-weight: bold;
+}
+.highlight .ni {
+  color: #999999;
+  font-weight: bold;
+}
+.highlight .w {
+  color: #BBBBBB;
+}
+.highlight .nf {
+  color: #a8e1fe;
+}
+.highlight .py {
+  color: #a8e1fe;
+}
+.highlight .na {
+  color: #a8e1fe;
+}
+.highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi {
+  color: #a8e1fe;
+  font-weight: bold;
+}
+    </style>
+
+    <!--<script src="/javascripts/all.js"></script>-->
+  </head>
+  <body>
+    
+    <div id="wrapper">
+      <aside>
+        <h1><a href="/">teebot</a></h1>
+        <div><a href="/about">About</a></div>
+        <div><a href="https://github.com/teebot/teebot.github.io/issues">Contact</a></div>
+      </aside>
+      <div id="main" role="main">
+        <p>If you are already familiar with ASP.NET MVC, you have probably seen the <a href="http://martinfowler.com/eaaCatalog/repository.html">repository pattern</a> in a few examples (such as <a href="http://nerddinnerbook.s3.amazonaws.com/Intro.htm">NerdDinner</a>), maybe you even use it in your own app.  </p>
+
+<p>One of the most frequent way to hot-plug a Repository class into a controller is to use the Strategy Pattern. But while an application evolves, you might want to centrally manage your wiring within a provider, that&rsquo;s what Dependency Injectors are for.<br>
+However lots of Dependency Injectors - or IoC containers at large - such as Unity or Castle Windsor contain a plethora of features and often rely heavily on XML configuration, making them overkill for smaller projects.<br>
+<a href="http://www.ninject.org/">Ninject</a> makes it relatively effortless to set up a DI. It just reached version 2.0.  </p>
+
+<p>In this post we will see how to:  </p>
+
+<ul>
+<li>  Quickly inject a Repository in a controller with Ninject</li>
+<li>  Mock the IRepository interface in your tests with the Ninject.Moq plugin</li>
+</ul>
+
+<p><strong>Get the bits</strong>  </p>
+
+<p>Here&rsquo;s where to get these dependencies:<br>
+<a href="http://code.google.com/p/moq/downloads/list">Moq</a><br>
+<a href="http://ninject.org/download">Ninject2 (with Ninject.Web.Mvc)</a><br>
+<a href="http://github.com/enkari/ninject.moq">Ninject.Moq plugin</a> (download and build)  </p>
+
+<p><strong>Creating a Simple Repository</strong>  </p>
+
+<p>Let&rsquo;s start a quick MVC app with a Repository.<br>
+The Winter Olympics provide us with a simple Model composed of the following types:  </p>
+
+<p><a href="http://4.bp.blogspot.com/_sMzr7iNm7bs/S46ThH_XOmI/AAAAAAAAAX0/NvwZQcbP4GM/s1600-h/ClassDiagram.png"><img src="https://4.bp.blogspot.com/_sMzr7iNm7bs/S46ThH_XOmI/AAAAAAAAAX0/NvwZQcbP4GM/s400/ClassDiagram.png" alt="Classdiagram" /></a>  </p>
+
+<p>Our Repository class looks like this:  </p>
+<pre class="highlight csharp"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">Repository</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Athlete</span><span class="p">&gt;</span> <span class="n">Athletes</span>
+    <span class="p">{</span>
+        <span class="k">get</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">FakeDb</span><span class="p">.</span><span class="n">Athletes</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="n">Athlete</span> <span class="nf">GetAthleteByName</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">ath</span> <span class="p">=</span> <span class="k">from</span> <span class="n">a</span> <span class="k">in</span> <span class="n">FakeDb</span><span class="p">.</span><span class="n">Athletes</span>
+                  <span class="k">where</span> <span class="n">a</span><span class="p">.</span><span class="n">LastName</span> <span class="p">==</span> <span class="n">name</span>
+                  <span class="k">select</span> <span class="n">a</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">ath</span><span class="p">.</span><span class="nf">Single</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Athlete</span><span class="p">&gt;</span> <span class="nf">GetAthletesByDiscipline</span><span class="p">(</span><span class="kt">string</span> <span class="n">discipline</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">ath</span> <span class="p">=</span> <span class="k">from</span> <span class="n">a</span> <span class="k">in</span> <span class="n">FakeDb</span><span class="p">.</span><span class="n">Athletes</span>
+                  <span class="k">where</span> <span class="n">a</span><span class="p">.</span><span class="n">Discipline</span><span class="p">.</span><span class="n">Name</span> <span class="p">==</span> <span class="n">discipline</span>
+                  <span class="k">select</span> <span class="n">a</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">ath</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Athlete</span><span class="p">&gt;</span> <span class="nf">GetAthletesByCountry</span><span class="p">(</span><span class="kt">string</span> <span class="n">country</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">ath</span> <span class="p">=</span> <span class="k">from</span> <span class="n">a</span> <span class="k">in</span> <span class="n">FakeDb</span><span class="p">.</span><span class="n">Athletes</span>
+                  <span class="k">where</span> <span class="n">a</span><span class="p">.</span><span class="n">Country</span><span class="p">.</span><span class="n">Name</span> <span class="p">==</span> <span class="n">country</span>
+                  <span class="k">orderby</span> <span class="n">a</span><span class="p">.</span><span class="n">Discipline</span><span class="p">.</span><span class="n">Name</span>
+                  <span class="k">select</span> <span class="n">a</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">ath</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+
+
+</code></pre>
+<p>Of course the first thing we&rsquo;ll do is to extract an IRepository interface from this class. We can at this point create a few Action Methods in an AthletesController to send some data to the view.  </p>
+<pre class="highlight csharp"><code>
+<span class="k">public</span> <span class="k">interface</span> <span class="n">IRepository</span>
+<span class="p">{</span>
+    <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Athlete</span><span class="p">&gt;</span> <span class="n">Athletes</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span>
+    <span class="n">Athlete</span> <span class="nf">GetAthleteByName</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">);</span>
+    <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Athlete</span><span class="p">&gt;</span> <span class="nf">GetAthletesByCountry</span><span class="p">(</span><span class="kt">string</span> <span class="n">country</span><span class="p">);</span>
+    <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Athlete</span><span class="p">&gt;</span> <span class="nf">GetAthletesByDiscipline</span><span class="p">(</span><span class="kt">string</span> <span class="n">discipline</span><span class="p">);</span>
+<span class="p">}</span>
+
+</code></pre>
+<p><strong>Injecting an IRepository into a Custom Controller</strong>  </p>
+
+<p>We&rsquo;ll now create a custom Controller by extending the MVC Controller class. Our extended type will contain our injected IRepository and all our controllers will inherit from it. Notice the [Inject] attribute:  </p>
+<pre class="highlight csharp"><code>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">OlympicsController</span> <span class="p">:</span> <span class="n">Controller</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">Inject</span><span class="p">]</span>
+    <span class="k">public</span> <span class="n">IRepository</span> <span class="n">Repository</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+<p>We only need two things to set up Ninject and bind the Repository implementation as an IRepository in our controller instance:  </p>
+
+<p>-First, a <strong>Ninject Module class</strong> where the binding occurs:  </p>
+<pre class="highlight csharp"><code>
+
+<span class="k">namespace</span> <span class="nn">WinterOlympics</span>
+<span class="p">{</span>
+  <span class="k">public</span> <span class="k">class</span> <span class="nc">WebModule</span> <span class="p">:</span> <span class="n">NinjectModule</span>
+  <span class="p">{</span>
+      <span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Load</span><span class="p">()</span>
+      <span class="p">{</span>
+
+
+          <span class="c1">//Repository injection</span>
+          <span class="n">Bind</span><span class="p">&lt;</span><span class="n">iRepository</span><span class="p">&gt;()</span>
+              <span class="p">.</span><span class="n">To</span><span class="p">&lt;</span><span class="n">repository</span><span class="p">&gt;();</span>
+
+      <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<p>-Second, we need to change our <span style="font-style: italic;">Global.asax</span> so our MvcApplication inherits from <strong>NinjectHttpApplication</strong> instead. That&rsquo;s also where the override <span style="font-style: italic;">CreateKernel()</span> references our binding module. Finally, we&rsquo;ll move the <span style="font-style: italic;">Application_Start</span> content under the <span style="font-style: italic;">OnApplicationStarted</span> override and call <span style="font-style: italic;">RegisterAllControllersIn()</span> with the current assembly as parameter.  </p>
+<pre class="highlight csharp"><code><span class="k">namespace</span> <span class="nn">WinterOlympics</span>
+<span class="p">{</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">MvcApplication</span> <span class="p">:</span> <span class="n">NinjectHttpApplication</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">RegisterRoutes</span><span class="p">(</span><span class="n">RouteCollection</span> <span class="n">routes</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">routes</span><span class="p">.</span><span class="nf">IgnoreRoute</span><span class="p">(</span><span class="s">"{resource}.axd/{*pathInfo}"</span><span class="p">);</span>
+
+            <span class="n">routes</span><span class="p">.</span><span class="nf">MapRoute</span><span class="p">(</span>
+              <span class="s">"Default"</span><span class="p">,</span>
+              <span class="s">"{controller}/{action}/{id}"</span><span class="p">,</span>
+              <span class="k">new</span> <span class="p">{</span> <span class="n">controller</span> <span class="p">=</span> <span class="s">"Home"</span><span class="p">,</span> <span class="n">action</span> <span class="p">=</span> <span class="s">"Index"</span><span class="p">,</span> <span class="n">id</span> <span class="p">=</span> <span class="s">""</span> <span class="p">}</span>
+            <span class="p">);</span>
+
+        <span class="p">}</span>
+
+        <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnApplicationStarted</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">AreaRegistration</span><span class="p">.</span><span class="nf">RegisterAllAreas</span><span class="p">();</span>
+
+            <span class="nf">RegisterRoutes</span><span class="p">(</span><span class="n">RouteTable</span><span class="p">.</span><span class="n">Routes</span><span class="p">);</span>
+            <span class="nf">RegisterAllControllersIn</span><span class="p">(</span><span class="n">Assembly</span><span class="p">.</span><span class="nf">GetExecutingAssembly</span><span class="p">());</span>
+        <span class="p">}</span>
+
+        <span class="k">protected</span> <span class="k">override</span> <span class="n">IKernel</span> <span class="nf">CreateKernel</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="nf">StandardKernel</span><span class="p">(</span><span class="k">new</span> <span class="nf">WebModule</span><span class="p">());</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre>
+<p>Ninject is now set up. At any time during development you can switch your IRepository implementation by changing the bindings of the NinjectModule.  </p>
+
+<p><strong>Mocking an IRepository with Ninject</strong>  </p>
+
+<p>Because our Repository implementation uses some sort of database, we don&rsquo;t want our Unit Tests to depend on it. It is generally recommended to test persistence layers in separate integration tests.  </p>
+
+<p>For our Unit Tests, we set up a fake IRepository implementation with Moq.<br>
+The Ninject.Moq plugin integrates our mock in our controller by using a <span style="font-style: italic;">MockingKernel</span> (as opposed to the StandardKernel previously seen in our <span style="font-style: italic;">Global.asax</span>).  </p>
+
+<p>Let&rsquo;s create a test context in which we set up the mocked injection.<br>
+Notice how the kernel injects a mock in the controller and how we&rsquo;re then able to retrieve the mock to set it up.  </p>
+<pre class="highlight csharp"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">AthletesControllerContext</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="k">readonly</span> <span class="n">MockingKernel</span> <span class="n">kernel</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="k">readonly</span> <span class="n">AthletesController</span> <span class="n">controller</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="k">readonly</span> <span class="n">Mock</span><span class="p">&lt;</span><span class="n">irepository</span><span class="p">&gt;</span> <span class="n">repositoryMock</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="nf">AthletesControllerContext</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">kernel</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">MockingKernel</span><span class="p">();</span>
+        <span class="n">controller</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">AthletesController</span><span class="p">();</span>
+        <span class="c1">//inject a mock of IRepository in the controller </span>
+        <span class="n">kernel</span><span class="p">.</span><span class="nf">Inject</span><span class="p">(</span><span class="n">controller</span><span class="p">);</span>
+        <span class="n">repositoryMock</span> <span class="p">=</span> <span class="n">Mock</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="n">controller</span><span class="p">.</span><span class="n">Repository</span><span class="p">);</span>
+
+        <span class="c1">//setup mocks</span>
+        <span class="n">Athlete</span> <span class="n">mockAthlete</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Athlete</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">BirthDate</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DateTime</span><span class="p">(</span><span class="m">1980</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">26</span><span class="p">),</span>
+            <span class="n">Discipline</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Discipline</span><span class="p">()</span>
+            <span class="p">{</span>
+                <span class="n">Name</span> <span class="p">=</span> <span class="s">"curling"</span><span class="p">,</span>
+                <span class="n">IsPlayedInTeams</span> <span class="p">=</span> <span class="k">true</span>
+            <span class="p">},</span>
+            <span class="n">Country</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Country</span><span class="p">()</span> <span class="p">{</span> <span class="n">Name</span> <span class="p">=</span> <span class="s">"Luxemburg"</span> <span class="p">},</span>
+            <span class="n">FirstName</span> <span class="p">=</span> <span class="s">"tee"</span><span class="p">,</span>
+            <span class="n">LastName</span> <span class="p">=</span> <span class="s">"bot"</span>
+        <span class="p">};</span>
+        <span class="n">repositoryMock</span><span class="p">.</span><span class="nf">Setup</span><span class="p">(</span><span class="n">m</span> <span class="p">=&gt;</span> <span class="n">m</span><span class="p">.</span><span class="n">Athletes</span><span class="p">).</span><span class="nf">Returns</span><span class="p">(</span><span class="k">new</span><span class="p">[]</span> <span class="p">{</span> <span class="n">mockAthlete</span> <span class="p">});</span>
+        <span class="n">repositoryMock</span><span class="p">.</span><span class="nf">Setup</span><span class="p">(</span><span class="n">m</span> <span class="p">=&gt;</span> <span class="n">m</span><span class="p">.</span><span class="nf">GetAthletesByCountry</span><span class="p">(</span><span class="s">"Luxemburg"</span><span class="p">)).</span><span class="nf">Returns</span><span class="p">(</span><span class="k">new</span><span class="p">[]</span> <span class="p">{</span> <span class="n">mockAthlete</span> <span class="p">});</span>
+        <span class="n">repositoryMock</span><span class="p">.</span><span class="nf">Setup</span><span class="p">(</span><span class="n">m</span> <span class="p">=&gt;</span> <span class="n">m</span><span class="p">.</span><span class="nf">GetAthletesByDiscipline</span><span class="p">(</span><span class="s">"curling"</span><span class="p">)).</span><span class="nf">Returns</span><span class="p">(</span><span class="k">new</span><span class="p">[]</span> <span class="p">{</span> <span class="n">mockAthlete</span> <span class="p">});</span>
+        <span class="n">repositoryMock</span><span class="p">.</span><span class="nf">Setup</span><span class="p">(</span><span class="n">m</span> <span class="p">=&gt;</span> <span class="n">m</span><span class="p">.</span><span class="nf">GetAthleteByName</span><span class="p">(</span><span class="s">"teebot"</span><span class="p">)).</span><span class="nf">Returns</span><span class="p">(</span><span class="n">mockAthlete</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<p>[Thanks to <a href="http://miguelmadero.blogspot.com/">Miguel Madero</a> for <a href="http://groups.google.com/group/ninject/browse_thread/thread/00b002be89027fe9/77a5de8fbf599438?#77a5de8fbf599438">helping me</a> figure out this last part]  </p>
+
+<p>Our test class inherits from this context and our test methods mimic the behavior of the application, goal achieved.  </p>
+<pre class="highlight csharp"><code>
+<span class="na">[TestClass]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">AthletesControllerTest</span> <span class="p">:</span> <span class="n">AthletesControllerContext</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">TestMethod</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">Index_Returns_NotNull_ViewResult_With_Data</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="c1">//Act</span>
+        <span class="n">ViewResult</span> <span class="n">res</span> <span class="p">=</span> <span class="n">controller</span><span class="p">.</span><span class="nf">Index</span><span class="p">()</span> <span class="k">as</span> <span class="n">ViewResult</span><span class="p">;</span>
+
+        <span class="c1">//Assert</span>
+        <span class="n">Assert</span><span class="p">.</span><span class="nf">IsNotNull</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">ViewData</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="p">[</span><span class="n">TestMethod</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">Detail_Returns_ViewResult_With_Data</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="c1">//Act</span>
+        <span class="n">ViewResult</span> <span class="n">res</span> <span class="p">=</span> <span class="n">controller</span><span class="p">.</span><span class="nf">Detail</span><span class="p">(</span><span class="s">"teebot"</span><span class="p">)</span> <span class="k">as</span> <span class="n">ViewResult</span><span class="p">;</span>
+
+        <span class="c1">//Assert</span>
+        <span class="n">Assert</span><span class="p">.</span><span class="nf">IsNotNull</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">ViewData</span><span class="p">);</span>
+        <span class="n">Assert</span><span class="p">.</span><span class="nf">IsInstanceOfType</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">ViewData</span><span class="p">.</span><span class="n">Model</span><span class="p">,</span> <span class="k">typeof</span><span class="p">(</span><span class="n">Athlete</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="p">[</span><span class="n">TestMethod</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">Detail_Returns_NotFound_View_For_NonExisting</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="c1">//Act</span>
+        <span class="n">ViewResult</span> <span class="n">res</span> <span class="p">=</span> <span class="n">controller</span><span class="p">.</span><span class="nf">Detail</span><span class="p">(</span><span class="s">"nonexisting"</span><span class="p">)</span> <span class="k">as</span> <span class="n">ViewResult</span><span class="p">;</span>
+
+        <span class="c1">//Assert</span>
+        <span class="n">Assert</span><span class="p">.</span><span class="nf">AreEqual</span><span class="p">(</span><span class="s">"NotFound"</span><span class="p">,</span> <span class="n">res</span><span class="p">.</span><span class="n">ViewName</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre>
+<p><a href="http://dev.teebot.be/blog/downloads/WinterOlympics.zip">Download Sample Code</a></p>
+
+<p>[Requires <a href="http://msdn.microsoft.com/en-us/vstudio/dd582936.aspx">Visual Studio 2010 RC</a> / <a href="http://aspnet.codeplex.com/releases/view/39978">ASP.NET MVC2 RC2</a>]  </p>
+
+<p><strong>Wrapping Up</strong>  </p>
+
+<p>In this post we saw how to inject our Repository implementation as an IRepository member of the controller.  </p>
+
+<p>Finally we switched our implementation for a mocked Repository in our tests.  </p>
+
+<p>We clearly saw a case for injection as our application is now loosely coupled and our MVC is testable. We could switch from a database to an XML file as persistence layer without affecting the client or the tests.  </p>
+
+<p>TeeBots-NET-Blog-ASPNET-MVC-Mocking-the-Repository-with-NinjectMoq)<br>
+<a href="http://www.teebot.be/2010/03/aspnet-mvc-and-ninject-repository.html">CodeProject</a></p>
+
+      </div>
+    </div>
+    <div id="footer">
+      <p>teebot &copy; 2016</p>
+    </div>
+  </body>
+</html>

@@ -378,7 +378,10 @@ body {
 
 .highlight {
   padding: 12px;
-  border-radius: 5px; }
+  border-radius: 5px;
+  font-size: 0.9rem;
+  max-width: 800px;
+  overflow: auto; }
 
 h2 {
   font-size: 3.5rem; }
@@ -409,5 +412,19 @@ a {
     margin: 1.2em; }
 
 .title-date {
-  font-size: 0.6em;
-  font-weight: normal; }
+  font-size: 0.3em;
+  font-weight: normal;
+  margin-top: 0.5em; }
+
+.page-prev {
+  float: left; }
+
+.page-next {
+  float: right; }
+
+.page-prev, .page-next {
+  background: #24286b;
+  padding: 0.3rem; }
+
+.page-prev a, .page-next a {
+  color: #f7f2e6; }

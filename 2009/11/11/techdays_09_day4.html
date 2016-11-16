@@ -5,7 +5,7 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>teebot </title>
+    <title>teebot  - TechEd 09 Day4. Dynamic Morning</title>
     <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/feed.xml" />
 
     <link href='//fonts.googleapis.com/css?family=Muli:300,400' rel='stylesheet' type='text/css'>
@@ -189,15 +189,41 @@
         <div><a href="https://github.com/teebot/teebot.github.io/issues">Contact</a></div>
       </aside>
       <div id="main" role="main">
-        <h1>Archive for
-    2016
-</h1>
+        <p><strong>Developing a Language with the Dynamic Language Runtime</strong>  </p>
 
+<p><a href="http://devhawk.net/">Harry Pierson</a> aknowledges that developing your own language is not a very common scenario. This session was a deep dive into the bit crunching stuff and the implementation behind the new DLR library which extends the CLR&rsquo;s cross-language support to dynamic languages. With IronPython and IronRuby gaining in popularity it was interesting to see how Microsoft actually architectured those changes in new libraries, improved the performance of dynamic languages while no major changes had to be made in the CLR.  </p>
 
-<ul>
-    <li><a href="/2016/11/16/whatever.html">About this blog</a> <span>Nov 16</span></li>
-</ul>
+<p>For those who want to dive even deeper into the DLR, the code is open sourced on <a href="http://dlr.codeplex.com/">codeplex</a>.  </p>
 
+<p><strong>Dynamic in Microsoft Visual C# 4.0: The Why&rsquo;s and How&rsquo;s</strong>  </p>
+
+<p>The HOW was covered in details by Harry already. Alex Turner first exposed the implementation choices behind the adventures of C# in the dynamic world. In the end the dynamic keyword is <a href="http://msdn.microsoft.com/en-us/library/dd264736(VS.100).aspx">used as a type</a> (but it&rsquo;s more than a type).  </p>
+
+<p>So WHY use dynamic at all? In which cases de we actually need some code that will be interpreted at runtime instead of compiling it in the IL?  </p>
+
+<ol>
+<li><p>Use code from dynamic languages (or being a better citizen in the .NET world)</p></li>
+<li><p>Talk to dynamic object models such as the HTML DOM or Silverlight</p></li>
+<li><p>Code more naturally with Interop COM interfaces (think Office Dev)</p></li>
+</ol>
+
+<p><img src="https://2.bp.blogspot.com/_sMzr7iNm7bs/Svwxx0IQ4cI/AAAAAAAAAU4/xLJILQk2Cog/s400/image_3.png" alt="Image 3" />  </p>
+
+<p><strong>Architecture Discovery and Validation with Visual Studio 2010</strong>  </p>
+
+<p>Peter Provost demonstrated the new tools for Architects available in VS2010 Ultimate. VS 2010 feels more and more like a complete standalone software factory since the inclusion of the UML modeling tool.  </p>
+
+<p>To try to understand existing code, the code Analysis tools can provide a valuable help. For the demo, Peter imported a big solution containing 30 projects and went on exploring it using the Architecture Explorer with class diagrams and the new filters. What impressed me the most was the Sequence Diagram Generation.  </p>
+
+<p><a href="http://1.bp.blogspot.com/_sMzr7iNm7bs/Svw6jmO8h6I/AAAAAAAAAVA/7eosT3nKK0k/s1600-h/image_thumb%5B19%5D.png"><img src="https://1.bp.blogspot.com/_sMzr7iNm7bs/Svw6jmO8h6I/AAAAAAAAAVA/7eosT3nKK0k/s400/image_thumb%5B19%5D.png" alt="Image thumb%5b19%5d" /></a>  </p>
+
+<p><strong>Book Shop</strong>  </p>
+
+<p>At the end of the day I stopped by the TechEd book shop. I often ask to architects if they know about some good books with a bit of theory illustrated by stories from the trenches. I think I finally found what I&rsquo;m looking for: Microsoft .NET Architecting Applications for the Enterprise.  </p>
+
+<p><a href="http://3.bp.blogspot.com/_sMzr7iNm7bs/SvyT7-_NBdI/AAAAAAAAAVI/WqWYKX-bndQ/s1600-h/9780735626096F.gif"><img src="https://3.bp.blogspot.com/_sMzr7iNm7bs/SvyT7-_NBdI/AAAAAAAAAVI/WqWYKX-bndQ/s400/9780735626096F.gif" alt="9780735626096f" /></a>  </p>
+
+<p>As this guy puts it in a review: <em>&ldquo;A .NET developer looking to move into architecture should make this book their first stop on a long journey&rdquo;</em>.</p>
 
       </div>
     </div>

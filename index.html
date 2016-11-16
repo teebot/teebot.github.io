@@ -178,37 +178,602 @@
 }
     </style>
 
-    <script src="/javascripts/all.js"></script>
+    <!--<script src="/javascripts/all.js"></script>-->
   </head>
   <body>
     
     <div id="wrapper">
       <aside>
-        <h1>teebot</h1>
+        <h1><a href="/">teebot</a></h1>
+        <div><a href="/about">About</a></div>
+        <div><a href="https://github.com/teebot/teebot.github.io/issues">Contact</a></div>
       </aside>
       <div id="main" role="main">
-          <h2><a href="/2016/10/05/welcome.html">Welcome</a> <div class="title-date">Oct  5</div></h2>
+          <h2><a href="/2016/11/16/whatever.html">About this blog</a> <div class="title-date">November 16, 2016</div></h2>
   <!-- use article.summary(250) if you have Nokogiri available to show just
        the first 250 characters -->
-  <h3>Welcome</h3>
+  <p>I briefly had a blog hosted on Blogger from 2009 to 2010 so I thought it&rsquo;d be fun to import these posts from my C# days and use a markdown based site generator on a github page. Jekyll&rsquo;s default design and structure didn&rsquo;t feel right somehow and I opted instead for <a href="https://middlemanapp.com">middleman</a> which is also made in Ruby.</p>
 
-<p>One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. &ldquo;What&rsquo;s happened to me?&rdquo; he thought. </p>
+<p>7 years have passed and my job has kept changing in the meantime - from C# to nodeJS and React, from IIS on premise to AWS lambdas, from bash deployment scripts to Docker. I found it pretty interesting to read my past self playing with AJAX and jQuery.</p>
 
-<p>It wasn&rsquo;t a dream. His room, a proper human room although a little too small, lay peacefully between its four familiar walls. A collection of textile samples lay spread out on the table - Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame. It showed a lady fitted out with a fur hat and fur boa who sat upright, raising a heavy fur muff that covered the whole of her lower arm towards the viewer. Gregor then turned to look out the window at the dull weather.</p>
-
-  <h2><a href="/2016/10/05/again.html">Again!</a> <div class="title-date">Oct  5</div></h2>
+  <h2><a href="/2010/07/22/lazy_loading_ajax.html">Lazy Loading Ajax in ASP.NET MVC</a> <div class="title-date">July 22, 2010</div></h2>
   <!-- use article.summary(250) if you have Nokogiri available to show just
        the first 250 characters -->
-  <h3>He did it again!</h3>
+  <p>I recently changed jobs and now work for an e-commerce company called <a href="https://www.vente-exclusive.com/">vente-exclusive.com</a>. We typically open new sales around 9am in the morning and immediately get a MASSIVE amount of traffic from that moment.</p>
 
-<p>Now I know what you&rsquo;re thinking. One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. &ldquo;What&rsquo;s happened to me?&rdquo; he thought. </p>
-<pre class="highlight ruby"><code><span class="k">def</span> <span class="nf">my_cool_method</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-  <span class="nb">puts</span> <span class="n">message</span>
-<span class="k">end</span>
+<p>Of course the architecture behind our ASP.NET MVC frontend is made to handle that and we manage to keep a pretty good response time using a mix of caching techniques, content delivery networks and clever programming.</p>
+
+<p>I was tasked with implementing a new &ldquo;users who bought this also bought&hellip;&rdquo; kind of feature you may see on most e-commerce sites. The processing time and data to load on the page are not negligible and that feature being displayed at the very bottom of the page, we might end up using a lot of additional resources for nothing if the user does not scroll down.</p>
+
+<p>It was decided that we would display these frequently combined items only if the area where it&rsquo;s supposed to load comes into the user&rsquo;s viewport - that is if it&rsquo;s displayed on the user&rsquo;s screen whether he scrolled down or his screen is big enough to handle the whole page. Amazon uses the technique on its <a href="https://www.amazon.co.uk/">homepage</a> (scroll down to the bottom).</p>
+
+<p>I found a pretty neat jQuery plugin to handle just that, it can be found at:
+<a href="http://remysharp.com/2009/01/26/element-in-view-event-plugin">http://remysharp.com/2009/01/26/element-in-view-event-plugin</a></p>
+
+<p>The <code>frequently-ordered</code> block has a <code>display:none</code> property. While remaining invisible it can be attached to an event called <code>inview</code> that will be triggered only once on the page (hence the &ldquo;.one&rdquo;).</p>
+<pre class="highlight javascript"><code><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">'#frequently-ordered'</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">one</span><span class="p">(</span><span class="s1">'inview'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">visible</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">visible</span><span class="p">)</span> <span class="p">{</span>
+          <span class="nx">loadFrequentlyOrderedProducts</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+      <span class="p">}</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+
 </code></pre>
-<p>It wasn&rsquo;t a dream. His room, a proper human room although a little too small, lay peacefully between its four familiar walls. A collection of textile samples lay spread out on the table - Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame. It showed a lady fitted out with a fur hat and fur boa who sat upright, raising a heavy fur muff that covered the whole of her lower arm towards the viewer. Gregor then turned to look out the window at the dull weather.</p>
+<p>The next step is standard MVC Ajax. The <code>loadFrequentlyOrderedProducts</code> function calls the Controller Action and returns the data from the partial:</p>
+<pre class="highlight javascript"><code>
+<span class="kd">function</span> <span class="nx">loadFrequentlyOrderedProducts</span><span class="p">(</span><span class="nx">page</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">'#frequently-ordered'</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span>
+  <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s1">'/Product/LoadFrequentlyOrderedProducts'</span><span class="p">;</span>
+
+  <span class="nx">$</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="p">{</span> <span class="na">productId</span><span class="p">:</span> <span class="mi">324</span><span class="p">,</span> <span class="na">saleId</span><span class="p">:</span> <span class="mi">234</span> <span class="p">},</span>
+    <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span> 
+      <span class="nx">$</span><span class="p">(</span><span class="s1">'#frequently-ordered'</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span> 
+    <span class="p">}</span>
+  <span class="p">);</span>
+<span class="p">};</span>
+
+</code></pre>
+<p>The Action would be fairly straightforward:</p>
+<pre class="highlight csharp"><code>
+<span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">LoadFrequentlyOrderedProducts</span><span class="p">(</span><span class="kt">int</span><span class="p">?</span> <span class="n">productId</span><span class="p">,</span> <span class="kt">int</span><span class="p">?</span><span class="n">saleId</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">FrequentlyOrderedProductsModel</span> <span class="n">model</span> <span class="p">=</span> 
+        <span class="k">new</span> <span class="nf">FrequentlyOrderedProductsModel</span><span class="p">();</span>
+
+    <span class="c1">//code omitted for illustration purposes</span>
+    <span class="k">return</span> <span class="nf">PartialView</span><span class="p">(</span><span class="s">"FrequentlyOrderedProducts"</span><span class="p">,</span> <span class="n">model</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+<p>That&rsquo;s an interesting technique for high traffic sites often dealing with a trade-off between high availability and rich dynamic features.</p>
+
+  <h2><a href="/2010/03/03/aspnetmvc_repository_di.html">ASP.NET MVC, Injecting & Mocking an IRepository</a> <div class="title-date">March  3, 2010</div></h2>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <p>If you are already familiar with ASP.NET MVC, you have probably seen the <a href="http://martinfowler.com/eaaCatalog/repository.html">repository pattern</a> in a few examples (such as <a href="http://nerddinnerbook.s3.amazonaws.com/Intro.htm">NerdDinner</a>), maybe you even use it in your own app.  </p>
+
+<p>One of the most frequent way to hot-plug a Repository class into a controller is to use the Strategy Pattern. But while an application evolves, you might want to centrally manage your wiring within a provider, that&rsquo;s what Dependency Injectors are for.<br>
+However lots of Dependency Injectors - or IoC containers at large - such as Unity or Castle Windsor contain a plethora of features and often rely heavily on XML configuration, making them overkill for smaller projects.<br>
+<a href="http://www.ninject.org/">Ninject</a> makes it relatively effortless to set up a DI. It just reached version 2.0.  </p>
+
+<p>In this post we will see how to:  </p>
+
+<ul>
+<li>  Quickly inject a Repository in a controller with Ninject</li>
+<li>  Mock the IRepository interface in your tests with the Ninject.Moq plugin</li>
+</ul>
+
+<p><strong>Get the bits</strong>  </p>
+
+<p>Here&rsquo;s where to get these dependencies:<br>
+<a href="http://code.google.com/p/moq/downloads/list">Moq</a><br>
+<a href="http://ninject.org/download">Ninject2 (with Ninject.Web.Mvc)</a><br>
+<a href="http://github.com/enkari/ninject.moq">Ninject.Moq plugin</a> (download and build)  </p>
+
+<p><strong>Creating a Simple Repository</strong>  </p>
+
+<p>Let&rsquo;s start a quick MVC app with a Repository.<br>
+The Winter Olympics provide us with a simple Model composed of the following types:  </p>
+
+<p><a href="http://4.bp.blogspot.com/_sMzr7iNm7bs/S46ThH_XOmI/AAAAAAAAAX0/NvwZQcbP4GM/s1600-h/ClassDiagram.png"><img src="https://4.bp.blogspot.com/_sMzr7iNm7bs/S46ThH_XOmI/AAAAAAAAAX0/NvwZQcbP4GM/s400/ClassDiagram.png" alt="Classdiagram" /></a>  </p>
+
+<p>Our Repository class looks like this:  </p>
+<pre class="highlight csharp"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">Repository</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Athlete</span><span class="p">&gt;</span> <span class="n">Athletes</span>
+    <span class="p">{</span>
+        <span class="k">get</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">FakeDb</span><span class="p">.</span><span class="n">Athletes</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="n">Athlete</span> <span class="nf">GetAthleteByName</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">ath</span> <span class="p">=</span> <span class="k">from</span> <span class="n">a</span> <span class="k">in</span> <span class="n">FakeDb</span><span class="p">.</span><span class="n">Athletes</span>
+                  <span class="k">where</span> <span class="n">a</span><span class="p">.</span><span class="n">LastName</span> <span class="p">==</span> <span class="n">name</span>
+                  <span class="k">select</span> <span class="n">a</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">ath</span><span class="p">.</span><span class="nf">Single</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Athlete</span><span class="p">&gt;</span> <span class="nf">GetAthletesByDiscipline</span><span class="p">(</span><span class="kt">string</span> <span class="n">discipline</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">ath</span> <span class="p">=</span> <span class="k">from</span> <span class="n">a</span> <span class="k">in</span> <span class="n">FakeDb</span><span class="p">.</span><span class="n">Athletes</span>
+                  <span class="k">where</span> <span class="n">a</span><span class="p">.</span><span class="n">Discipline</span><span class="p">.</span><span class="n">Name</span> <span class="p">==</span> <span class="n">discipline</span>
+                  <span class="k">select</span> <span class="n">a</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">ath</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Athlete</span><span class="p">&gt;</span> <span class="nf">GetAthletesByCountry</span><span class="p">(</span><span class="kt">string</span> <span class="n">country</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">ath</span> <span class="p">=</span> <span class="k">from</span> <span class="n">a</span> <span class="k">in</span> <span class="n">FakeDb</span><span class="p">.</span><span class="n">Athletes</span>
+                  <span class="k">where</span> <span class="n">a</span><span class="p">.</span><span class="n">Country</span><span class="p">.</span><span class="n">Name</span> <span class="p">==</span> <span class="n">country</span>
+                  <span class="k">orderby</span> <span class="n">a</span><span class="p">.</span><span class="n">Discipline</span><span class="p">.</span><span class="n">Name</span>
+                  <span class="k">select</span> <span class="n">a</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">ath</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
 
 
+</code></pre>
+<p>Of course the first thing we&rsquo;ll do is to extract an IRepository interface from this class. We can at this point create a few Action Methods in an AthletesController to send some data to the view.  </p>
+<pre class="highlight csharp"><code>
+<span class="k">public</span> <span class="k">interface</span> <span class="n">IRepository</span>
+<span class="p">{</span>
+    <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Athlete</span><span class="p">&gt;</span> <span class="n">Athletes</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span>
+    <span class="n">Athlete</span> <span class="nf">GetAthleteByName</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">);</span>
+    <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Athlete</span><span class="p">&gt;</span> <span class="nf">GetAthletesByCountry</span><span class="p">(</span><span class="kt">string</span> <span class="n">country</span><span class="p">);</span>
+    <span class="n">IEnumerable</span><span class="p">&lt;</span><span class="n">Athlete</span><span class="p">&gt;</span> <span class="nf">GetAthletesByDiscipline</span><span class="p">(</span><span class="kt">string</span> <span class="n">discipline</span><span class="p">);</span>
+<span class="p">}</span>
+
+</code></pre>
+<p><strong>Injecting an IRepository into a Custom Controller</strong>  </p>
+
+<p>We&rsquo;ll now create a custom Controller by extending the MVC Controller class. Our extended type will contain our injected IRepository and all our controllers will inherit from it. Notice the [Inject] attribute:  </p>
+<pre class="highlight csharp"><code>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">OlympicsController</span> <span class="p">:</span> <span class="n">Controller</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">Inject</span><span class="p">]</span>
+    <span class="k">public</span> <span class="n">IRepository</span> <span class="n">Repository</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+<p>We only need two things to set up Ninject and bind the Repository implementation as an IRepository in our controller instance:  </p>
+
+<p>-First, a <strong>Ninject Module class</strong> where the binding occurs:  </p>
+<pre class="highlight csharp"><code>
+
+<span class="k">namespace</span> <span class="nn">WinterOlympics</span>
+<span class="p">{</span>
+  <span class="k">public</span> <span class="k">class</span> <span class="nc">WebModule</span> <span class="p">:</span> <span class="n">NinjectModule</span>
+  <span class="p">{</span>
+      <span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Load</span><span class="p">()</span>
+      <span class="p">{</span>
+
+
+          <span class="c1">//Repository injection</span>
+          <span class="n">Bind</span><span class="p">&lt;</span><span class="n">iRepository</span><span class="p">&gt;()</span>
+              <span class="p">.</span><span class="n">To</span><span class="p">&lt;</span><span class="n">repository</span><span class="p">&gt;();</span>
+
+      <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<p>-Second, we need to change our <span style="font-style: italic;">Global.asax</span> so our MvcApplication inherits from <strong>NinjectHttpApplication</strong> instead. That&rsquo;s also where the override <span style="font-style: italic;">CreateKernel()</span> references our binding module. Finally, we&rsquo;ll move the <span style="font-style: italic;">Application_Start</span> content under the <span style="font-style: italic;">OnApplicationStarted</span> override and call <span style="font-style: italic;">RegisterAllControllersIn()</span> with the current assembly as parameter.  </p>
+<pre class="highlight csharp"><code><span class="k">namespace</span> <span class="nn">WinterOlympics</span>
+<span class="p">{</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">MvcApplication</span> <span class="p">:</span> <span class="n">NinjectHttpApplication</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">RegisterRoutes</span><span class="p">(</span><span class="n">RouteCollection</span> <span class="n">routes</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">routes</span><span class="p">.</span><span class="nf">IgnoreRoute</span><span class="p">(</span><span class="s">"{resource}.axd/{*pathInfo}"</span><span class="p">);</span>
+
+            <span class="n">routes</span><span class="p">.</span><span class="nf">MapRoute</span><span class="p">(</span>
+              <span class="s">"Default"</span><span class="p">,</span>
+              <span class="s">"{controller}/{action}/{id}"</span><span class="p">,</span>
+              <span class="k">new</span> <span class="p">{</span> <span class="n">controller</span> <span class="p">=</span> <span class="s">"Home"</span><span class="p">,</span> <span class="n">action</span> <span class="p">=</span> <span class="s">"Index"</span><span class="p">,</span> <span class="n">id</span> <span class="p">=</span> <span class="s">""</span> <span class="p">}</span>
+            <span class="p">);</span>
+
+        <span class="p">}</span>
+
+        <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">OnApplicationStarted</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">AreaRegistration</span><span class="p">.</span><span class="nf">RegisterAllAreas</span><span class="p">();</span>
+
+            <span class="nf">RegisterRoutes</span><span class="p">(</span><span class="n">RouteTable</span><span class="p">.</span><span class="n">Routes</span><span class="p">);</span>
+            <span class="nf">RegisterAllControllersIn</span><span class="p">(</span><span class="n">Assembly</span><span class="p">.</span><span class="nf">GetExecutingAssembly</span><span class="p">());</span>
+        <span class="p">}</span>
+
+        <span class="k">protected</span> <span class="k">override</span> <span class="n">IKernel</span> <span class="nf">CreateKernel</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="nf">StandardKernel</span><span class="p">(</span><span class="k">new</span> <span class="nf">WebModule</span><span class="p">());</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre>
+<p>Ninject is now set up. At any time during development you can switch your IRepository implementation by changing the bindings of the NinjectModule.  </p>
+
+<p><strong>Mocking an IRepository with Ninject</strong>  </p>
+
+<p>Because our Repository implementation uses some sort of database, we don&rsquo;t want our Unit Tests to depend on it. It is generally recommended to test persistence layers in separate integration tests.  </p>
+
+<p>For our Unit Tests, we set up a fake IRepository implementation with Moq.<br>
+The Ninject.Moq plugin integrates our mock in our controller by using a <span style="font-style: italic;">MockingKernel</span> (as opposed to the StandardKernel previously seen in our <span style="font-style: italic;">Global.asax</span>).  </p>
+
+<p>Let&rsquo;s create a test context in which we set up the mocked injection.<br>
+Notice how the kernel injects a mock in the controller and how we&rsquo;re then able to retrieve the mock to set it up.  </p>
+<pre class="highlight csharp"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">AthletesControllerContext</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="k">readonly</span> <span class="n">MockingKernel</span> <span class="n">kernel</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="k">readonly</span> <span class="n">AthletesController</span> <span class="n">controller</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="k">readonly</span> <span class="n">Mock</span><span class="p">&lt;</span><span class="n">irepository</span><span class="p">&gt;</span> <span class="n">repositoryMock</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="nf">AthletesControllerContext</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">kernel</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">MockingKernel</span><span class="p">();</span>
+        <span class="n">controller</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">AthletesController</span><span class="p">();</span>
+        <span class="c1">//inject a mock of IRepository in the controller </span>
+        <span class="n">kernel</span><span class="p">.</span><span class="nf">Inject</span><span class="p">(</span><span class="n">controller</span><span class="p">);</span>
+        <span class="n">repositoryMock</span> <span class="p">=</span> <span class="n">Mock</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="n">controller</span><span class="p">.</span><span class="n">Repository</span><span class="p">);</span>
+
+        <span class="c1">//setup mocks</span>
+        <span class="n">Athlete</span> <span class="n">mockAthlete</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Athlete</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">BirthDate</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">DateTime</span><span class="p">(</span><span class="m">1980</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">26</span><span class="p">),</span>
+            <span class="n">Discipline</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Discipline</span><span class="p">()</span>
+            <span class="p">{</span>
+                <span class="n">Name</span> <span class="p">=</span> <span class="s">"curling"</span><span class="p">,</span>
+                <span class="n">IsPlayedInTeams</span> <span class="p">=</span> <span class="k">true</span>
+            <span class="p">},</span>
+            <span class="n">Country</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Country</span><span class="p">()</span> <span class="p">{</span> <span class="n">Name</span> <span class="p">=</span> <span class="s">"Luxemburg"</span> <span class="p">},</span>
+            <span class="n">FirstName</span> <span class="p">=</span> <span class="s">"tee"</span><span class="p">,</span>
+            <span class="n">LastName</span> <span class="p">=</span> <span class="s">"bot"</span>
+        <span class="p">};</span>
+        <span class="n">repositoryMock</span><span class="p">.</span><span class="nf">Setup</span><span class="p">(</span><span class="n">m</span> <span class="p">=&gt;</span> <span class="n">m</span><span class="p">.</span><span class="n">Athletes</span><span class="p">).</span><span class="nf">Returns</span><span class="p">(</span><span class="k">new</span><span class="p">[]</span> <span class="p">{</span> <span class="n">mockAthlete</span> <span class="p">});</span>
+        <span class="n">repositoryMock</span><span class="p">.</span><span class="nf">Setup</span><span class="p">(</span><span class="n">m</span> <span class="p">=&gt;</span> <span class="n">m</span><span class="p">.</span><span class="nf">GetAthletesByCountry</span><span class="p">(</span><span class="s">"Luxemburg"</span><span class="p">)).</span><span class="nf">Returns</span><span class="p">(</span><span class="k">new</span><span class="p">[]</span> <span class="p">{</span> <span class="n">mockAthlete</span> <span class="p">});</span>
+        <span class="n">repositoryMock</span><span class="p">.</span><span class="nf">Setup</span><span class="p">(</span><span class="n">m</span> <span class="p">=&gt;</span> <span class="n">m</span><span class="p">.</span><span class="nf">GetAthletesByDiscipline</span><span class="p">(</span><span class="s">"curling"</span><span class="p">)).</span><span class="nf">Returns</span><span class="p">(</span><span class="k">new</span><span class="p">[]</span> <span class="p">{</span> <span class="n">mockAthlete</span> <span class="p">});</span>
+        <span class="n">repositoryMock</span><span class="p">.</span><span class="nf">Setup</span><span class="p">(</span><span class="n">m</span> <span class="p">=&gt;</span> <span class="n">m</span><span class="p">.</span><span class="nf">GetAthleteByName</span><span class="p">(</span><span class="s">"teebot"</span><span class="p">)).</span><span class="nf">Returns</span><span class="p">(</span><span class="n">mockAthlete</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<p>[Thanks to <a href="http://miguelmadero.blogspot.com/">Miguel Madero</a> for <a href="http://groups.google.com/group/ninject/browse_thread/thread/00b002be89027fe9/77a5de8fbf599438?#77a5de8fbf599438">helping me</a> figure out this last part]  </p>
+
+<p>Our test class inherits from this context and our test methods mimic the behavior of the application, goal achieved.  </p>
+<pre class="highlight csharp"><code>
+<span class="na">[TestClass]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">AthletesControllerTest</span> <span class="p">:</span> <span class="n">AthletesControllerContext</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">TestMethod</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">Index_Returns_NotNull_ViewResult_With_Data</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="c1">//Act</span>
+        <span class="n">ViewResult</span> <span class="n">res</span> <span class="p">=</span> <span class="n">controller</span><span class="p">.</span><span class="nf">Index</span><span class="p">()</span> <span class="k">as</span> <span class="n">ViewResult</span><span class="p">;</span>
+
+        <span class="c1">//Assert</span>
+        <span class="n">Assert</span><span class="p">.</span><span class="nf">IsNotNull</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">ViewData</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="p">[</span><span class="n">TestMethod</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">Detail_Returns_ViewResult_With_Data</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="c1">//Act</span>
+        <span class="n">ViewResult</span> <span class="n">res</span> <span class="p">=</span> <span class="n">controller</span><span class="p">.</span><span class="nf">Detail</span><span class="p">(</span><span class="s">"teebot"</span><span class="p">)</span> <span class="k">as</span> <span class="n">ViewResult</span><span class="p">;</span>
+
+        <span class="c1">//Assert</span>
+        <span class="n">Assert</span><span class="p">.</span><span class="nf">IsNotNull</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">ViewData</span><span class="p">);</span>
+        <span class="n">Assert</span><span class="p">.</span><span class="nf">IsInstanceOfType</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">ViewData</span><span class="p">.</span><span class="n">Model</span><span class="p">,</span> <span class="k">typeof</span><span class="p">(</span><span class="n">Athlete</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="p">[</span><span class="n">TestMethod</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">Detail_Returns_NotFound_View_For_NonExisting</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="c1">//Act</span>
+        <span class="n">ViewResult</span> <span class="n">res</span> <span class="p">=</span> <span class="n">controller</span><span class="p">.</span><span class="nf">Detail</span><span class="p">(</span><span class="s">"nonexisting"</span><span class="p">)</span> <span class="k">as</span> <span class="n">ViewResult</span><span class="p">;</span>
+
+        <span class="c1">//Assert</span>
+        <span class="n">Assert</span><span class="p">.</span><span class="nf">AreEqual</span><span class="p">(</span><span class="s">"NotFound"</span><span class="p">,</span> <span class="n">res</span><span class="p">.</span><span class="n">ViewName</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre>
+<p><a href="http://dev.teebot.be/blog/downloads/WinterOlympics.zip">Download Sample Code</a></p>
+
+<p>[Requires <a href="http://msdn.microsoft.com/en-us/vstudio/dd582936.aspx">Visual Studio 2010 RC</a> / <a href="http://aspnet.codeplex.com/releases/view/39978">ASP.NET MVC2 RC2</a>]  </p>
+
+<p><strong>Wrapping Up</strong>  </p>
+
+<p>In this post we saw how to inject our Repository implementation as an IRepository member of the controller.  </p>
+
+<p>Finally we switched our implementation for a mocked Repository in our tests.  </p>
+
+<p>We clearly saw a case for injection as our application is now loosely coupled and our MVC is testable. We could switch from a database to an XML file as persistence layer without affecting the client or the tests.  </p>
+
+<p>TeeBots-NET-Blog-ASPNET-MVC-Mocking-the-Repository-with-NinjectMoq)<br>
+<a href="http://www.teebot.be/2010/03/aspnet-mvc-and-ninject-repository.html">CodeProject</a></p>
+
+  <h2><a href="/2009/11/16/setting_ad_properties.html">Setting AD Properties using the new AccountManagement API</a> <div class="title-date">November 16, 2009</div></h2>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <p>So I&rsquo;m currently programming a lightweight utility to manage LDAP objects and I came to use the new <a href="http://msdn.microsoft.com/en-us/library/system.directoryservices.accountmanagement.aspx">AccountManagement API</a> introduced in .NET 3.5 because it&rsquo;s way easier and more object-oriented than <a href="http://msdn.microsoft.com/en-us/library/system.directoryservices.aspx">DirectoryServices</a>.  </p>
+
+<p>This new namespace, as I see it, is just provided as a friendlier way to query an LDAP server and is actually built on top of the plain DirectoryServices bits. And it shows&hellip; For example you have to dispose all objects performing a search (FindIdentity) or as Gary Caldwell <a href="http://msdn.microsoft.com/en-us/library/bb345628.aspx">puts it</a>:  </p>
+
+<blockquote>
+<p>This call has an unmanaged memory leak because the underlying implemenation uses DirectorySearcher and SearchResultsCollection but does not call dispose on the SearchResultsCollection as the document describes.</p>
+</blockquote>
+
+<p>Also, because AccountManagement is not as close to the metal as DirectoryServices you can only control whatever Microsoft chose to expose in the API.  </p>
+
+<p>However a fantastic feature of AccountManagement is the ability to fall back on a DirectoryServices object whenever you need to because the underlying object of any Principal is exposed through GetUnderlyingObject().  </p>
+<pre class="highlight csharp"><code><span class="n">DirectoryEntry</span> <span class="n">entry</span> <span class="p">=</span> <span class="p">(</span><span class="n">DirectoryEntry</span><span class="p">)</span><span class="n">principal</span><span class="p">.</span><span class="nf">GetUnderlyingObject</span><span class="p">();</span>
+</code></pre>
+<p>With that much power in our hands we can now use this to set some properties unexposed by AccountManagement. Here&rsquo;s a generic method I made to set LDAP properties on any Principal (users, groups, computers):  </p>
+<pre class="highlight csharp"><code><span class="k">public</span> <span class="k">void</span> <span class="n">SetCustomProperty</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;(</span><span class="kt">string</span> <span class="n">key</span><span class="p">,</span> <span class="kt">string</span> <span class="k">value</span><span class="p">,</span> <span class="n">T</span> <span class="n">principal</span><span class="p">)</span>
+ <span class="k">where</span> <span class="n">T</span> <span class="p">:</span> <span class="n">Principal</span> <span class="p">{</span>
+ <span class="k">if</span> <span class="p">(</span><span class="n">principal</span><span class="p">.</span><span class="nf">GetUnderlyingObjectType</span><span class="p">()</span> <span class="p">==</span> <span class="k">typeof</span><span class="p">(</span><span class="n">DirectoryEntry</span><span class="p">))</span> <span class="p">{</span>
+   <span class="n">DirectoryEntry</span> <span class="n">entry</span> <span class="p">=</span> <span class="p">(</span><span class="n">DirectoryEntry</span><span class="p">)</span><span class="n">principal</span><span class="p">.</span><span class="nf">GetUnderlyingObject</span><span class="p">();</span>
+   <span class="n">entry</span><span class="p">.</span><span class="n">Properties</span><span class="p">[</span><span class="n">key</span><span class="p">].</span><span class="n">Value</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
+
+   <span class="k">try</span>
+   <span class="p">{</span>
+      <span class="n">entry</span><span class="p">.</span><span class="nf">CommitChanges</span><span class="p">();</span>
+   <span class="p">}</span>
+   <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span>
+   <span class="p">{</span>
+
+      <span class="kt">string</span> <span class="n">message</span> <span class="p">=</span> 
+      <span class="n">String</span><span class="p">.</span><span class="nf">Format</span><span class="p">(</span><span class="s">@"Could not set custom property {0} to value {1} for object {2}"</span><span class="p">,</span> 
+      <span class="n">key</span><span class="p">,</span> <span class="k">value</span><span class="p">,</span> <span class="n">principal</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
+
+      <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">e</span><span class="p">);</span>
+   <span class="p">}</span>
+ <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<p>Use it like this:  </p>
+<pre class="highlight csharp"><code><span class="n">SetCustomProperty</span><span class="p">&lt;</span><span class="n">userprincipal</span><span class="p">&gt;(</span><span class="s">"streetAddress"</span><span class="p">,</span> <span class="s">"21 jumpstreet"</span><span class="p">,</span> <span class="n">userPrincipal</span><span class="p">);</span>
+</code></pre>
+<p>Being user-friendly while keeping control? I&rsquo;m starting to like that little guy.  </p>
+
+<p><strong>UPDATE: As an anonymous commenter pointed out, there&rsquo;s a way to actually map an AD attribute to a property of a class inheriting UserPrincipal. The technique consists of decorating the property with the attribute <span style="font-style: italic;">DirectoryProperty</span> and the field name as parameter (as seen <a href="http://msdn.microsoft.com/en-us/magazine/cc135979.aspx#S10">here</a>).</strong>  </p>
+
+<p><strong>NOTE: code indentation is messy in the examples. I need to fix something in my snippet tool.</strong>  </p>
+
+<p><a href="http://www.teebot.be/2009/12/ad-setting-custom-properties-using-new.html">CodeProject</a></p>
+
+  <h2><a href="/2009/11/12/techdays_09_day5.html">TechEd 09 Day5. Lucky Friday Thirteenth</a> <div class="title-date">November 12, 2009</div></h2>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <p>Today is the last day of TechEd.  </p>
+
+<p><strong>A SharePoint Pattern Language</strong>  </p>
+
+<p>Non-Microsoft speaker Jim Wilt first made the assumption that we&rsquo;re feeling like if our brains were about to leak through our ears. Good guess Jim!<br>
+He is presenting us an offshoot of the work he&rsquo;s doing for Microsoft. He won&rsquo;t be able to tell us everything about it as it is still pure research at this time.  </p>
+
+<p>There is a necessity to document SharePoint solutions that are repeatable, extensible, and reliable. But should we have a SharePoint specific pattern-language?  </p>
+
+<p>Jim thinks so because there are SharePoint specific concepts to take into account:  </p>
+
+<p>First the application level: component, solution site or template levels.<br>
+And secondly the tools to use: Out-of-Box, SharePoint Designer or Visual Studio.  </p>
+
+<p>The demo pattern was <em>Collecting anonymous user data securely</em>. In this example, the pattern sits at the solution site level using out-of-box and SharePoint Designer.  </p>
+
+<p>Jim thanked us for attending this session at 9am on the last day.<br>
+A repository of SharePoint Patterns would be a great addition (at another level) to the <a href="http://www.codeplex.com/spg">existing SharePoint Guidance</a>.  </p>
+
+<p><strong>Rest of the Day</strong>  </p>
+
+<p>After that session, I spent some time at the Visual Studio booth. I spoke a little with Marian Luparu, Visual C++ Program Manager who reminded me that Microsoft is basically a C++ factory.  </p>
+
+<p>The last session I&rsquo;ll be attending is about <a href="http://msdn.microsoft.com/en-us/devlabs/cc950525.aspx">Pex</a> and <a href="http://research.microsoft.com/en-us/projects/contracts/">Code Contracts</a>, which to me are the most interesting additions to .NET 4 and VS2010. I wonder how the automated test generation tool works.</p>
+
+  <h2><a href="/2009/11/11/techdays_09_day4.html">TechEd 09 Day4. Dynamic Morning</a> <div class="title-date">November 11, 2009</div></h2>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <p><strong>Developing a Language with the Dynamic Language Runtime</strong>  </p>
+
+<p><a href="http://devhawk.net/">Harry Pierson</a> aknowledges that developing your own language is not a very common scenario. This session was a deep dive into the bit crunching stuff and the implementation behind the new DLR library which extends the CLR&rsquo;s cross-language support to dynamic languages. With IronPython and IronRuby gaining in popularity it was interesting to see how Microsoft actually architectured those changes in new libraries, improved the performance of dynamic languages while no major changes had to be made in the CLR.  </p>
+
+<p>For those who want to dive even deeper into the DLR, the code is open sourced on <a href="http://dlr.codeplex.com/">codeplex</a>.  </p>
+
+<p><strong>Dynamic in Microsoft Visual C# 4.0: The Why&rsquo;s and How&rsquo;s</strong>  </p>
+
+<p>The HOW was covered in details by Harry already. Alex Turner first exposed the implementation choices behind the adventures of C# in the dynamic world. In the end the dynamic keyword is <a href="http://msdn.microsoft.com/en-us/library/dd264736(VS.100).aspx">used as a type</a> (but it&rsquo;s more than a type).  </p>
+
+<p>So WHY use dynamic at all? In which cases de we actually need some code that will be interpreted at runtime instead of compiling it in the IL?  </p>
+
+<ol>
+<li><p>Use code from dynamic languages (or being a better citizen in the .NET world)</p></li>
+<li><p>Talk to dynamic object models such as the HTML DOM or Silverlight</p></li>
+<li><p>Code more naturally with Interop COM interfaces (think Office Dev)</p></li>
+</ol>
+
+<p><img src="https://2.bp.blogspot.com/_sMzr7iNm7bs/Svwxx0IQ4cI/AAAAAAAAAU4/xLJILQk2Cog/s400/image_3.png" alt="Image 3" />  </p>
+
+<p><strong>Architecture Discovery and Validation with Visual Studio 2010</strong>  </p>
+
+<p>Peter Provost demonstrated the new tools for Architects available in VS2010 Ultimate. VS 2010 feels more and more like a complete standalone software factory since the inclusion of the UML modeling tool.  </p>
+
+<p>To try to understand existing code, the code Analysis tools can provide a valuable help. For the demo, Peter imported a big solution containing 30 projects and went on exploring it using the Architecture Explorer with class diagrams and the new filters. What impressed me the most was the Sequence Diagram Generation.  </p>
+
+<p><a href="http://1.bp.blogspot.com/_sMzr7iNm7bs/Svw6jmO8h6I/AAAAAAAAAVA/7eosT3nKK0k/s1600-h/image_thumb%5B19%5D.png"><img src="https://1.bp.blogspot.com/_sMzr7iNm7bs/Svw6jmO8h6I/AAAAAAAAAVA/7eosT3nKK0k/s400/image_thumb%5B19%5D.png" alt="Image thumb%5b19%5d" /></a>  </p>
+
+<p><strong>Book Shop</strong>  </p>
+
+<p>At the end of the day I stopped by the TechEd book shop. I often ask to architects if they know about some good books with a bit of theory illustrated by stories from the trenches. I think I finally found what I&rsquo;m looking for: Microsoft .NET Architecting Applications for the Enterprise.  </p>
+
+<p><a href="http://3.bp.blogspot.com/_sMzr7iNm7bs/SvyT7-_NBdI/AAAAAAAAAVI/WqWYKX-bndQ/s1600-h/9780735626096F.gif"><img src="https://3.bp.blogspot.com/_sMzr7iNm7bs/SvyT7-_NBdI/AAAAAAAAAVI/WqWYKX-bndQ/s400/9780735626096F.gif" alt="9780735626096f" /></a>  </p>
+
+<p>As this guy puts it in a review: <em>&ldquo;A .NET developer looking to move into architecture should make this book their first stop on a long journey&rdquo;</em>.</p>
+
+  <h2><a href="/2009/11/10/techdays_09_day3.html">TechEd 09 Day3. Today is Architecture Day!</a> <div class="title-date">November 10, 2009</div></h2>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <p>Most sessions Kristof and I will be attending today are part of the Architecture Track.  </p>
+
+<p><strong>Application Models for Utility Computing</strong>  </p>
+
+<p>Ulrich Homann spoke about how SharePoint&rsquo;s Scalability was made with Scale Units in mind for each tier (Database Tier, Middle Tier, Application Tier, Load-Balancing Tier, Storage Tier).  </p>
+
+<p>He then went on discussing how we can layer an application to enable virtualization in the enterprise world. For example, the data tier of an application could be scaled down to 2 or 3 servers at night while the others are going back to the image library. This frees computing resources that can either sleep to save energy or be used for crawling. [See <a href="http://msdn.microsoft.com/en-us/library/dd393307.aspx">Application Patterns for Green IT</a>]  </p>
+
+<p>As Ulrich puts it Mainframe developers already did this 20 years ago. I would add that there is fundamental difference: hardware is a lot cheaper now than it was before, <a href="http://www.codinghorror.com/blog/archives/001198.html">cheaper than hiring programmers</a>.  </p>
+
+<p><strong>The Role of the Software Architect: Caring and Communicating</strong>  </p>
+
+<p>Very interesting talk or should I say open discussion about what exactly is an Architect. Architects should be held more accountable according to Magnus Mårtensson, it&rsquo;s a matter of pride and professionalism. Magnus quoted yoda to make a point about why Architects should not inspire fear to developers because &ldquo;Fear is the path to the dark side. Fear leads to anger. Anger leads to hate. Hate leads to suffering&rdquo;.  </p>
+
+<p><a href="http://3.bp.blogspot.com/_sMzr7iNm7bs/SvrFifnViMI/AAAAAAAAAUY/l17OH8efoyw/s1600-h/yoda2.jpg"><img src="https://3.bp.blogspot.com/_sMzr7iNm7bs/SvrFifnViMI/AAAAAAAAAUY/l17OH8efoyw/s400/yoda2.jpg" alt="Yoda2" /></a>  </p>
+
+<p><strong>Unit Testing Good Practices</strong>  </p>
+
+<p>Roy Osherove is Chief Architect at TypeMock. His presentation was focused on 3 requirements to write good tests: Tests should be trustworthy, maintainable and readable.  </p>
+
+<p>That was definitely the best presentation so far in my opinion. It was technical and straight to the point.  </p>
+
+<p>After developing each of these points, Roy challenged some Microsoft-issued code by looking at their tests (the NerdDinner MVC sample, the Unity project). It was really interesting to see why most of them don&rsquo;t achieve a good readability or are sometimes not relevant enough, especially since I have seen those tests before while learning MVC and found them quite good.  </p>
+
+<p>On the side he often plugged his book &ldquo;The Art of Unit Testing&rdquo; and made a reference to Code Katas. Roy also does Test Code Reviews on <a href="http://weblogs.asp.net/rosherove/archive/2009/10/18/test-review-mef.aspx">his blog</a>.  </p>
+
+<p><a href="http://1.bp.blogspot.com/_sMzr7iNm7bs/SvrPCtre6UI/AAAAAAAAAUg/ljn4uwDuM88/s1600-h/katas-illustration.png"><img src="https://1.bp.blogspot.com/_sMzr7iNm7bs/SvrPCtre6UI/AAAAAAAAAUg/ljn4uwDuM88/s400/katas-illustration.png" alt="Katas illustration" /></a>  </p>
+
+<p>I&rsquo;ll keep a note to talk more about Code Katas on this blog for learning purposes, but for a good explanation check this <a href="http://www.codinghorror.com/blog/archives/001138.html">Jeff Atwood&rsquo;s post</a> who quotes <a href="http://steve-yegge.blogspot.com/">Steve Yegge&rsquo;s blog</a>.  </p>
+
+<p>Also <a href="http://codekata.pragprog.com/2007/01/code_kata_backg.html#more">this</a> appears to be the founding post of code katas which I will quote:  </p>
+
+<blockquote>
+<p>A kata is an exercise in karate where you repeat a form many, many times, making little improvements in each. The intent behind code kata is similar.</p>
+</blockquote>
+
+<p>There is an obvious trend in the development world these days and it&rsquo;s using Ninjas as metaphors for developers: Code Katas, <a href="http://ninject.org/">Ninject</a> the dependency injection library and the <a href="http://www.manning.com/osherove/">cover of Roy&rsquo;s book</a>.  </p>
+
+<p>That&rsquo;s it for today! Stay tuned for Day 4 and Day 5!  </p>
+
+<p><a href="http://2.bp.blogspot.com/_sMzr7iNm7bs/Svr46i1_uMI/AAAAAAAAAUw/sb8kj2-27lQ/s1600-h/KristofUndTeebot.jpg"><img src="https://2.bp.blogspot.com/_sMzr7iNm7bs/Svr46i1_uMI/AAAAAAAAAUw/sb8kj2-27lQ/s400/KristofUndTeebot.jpg" alt="Kristofundteebot" /></a></p>
+
+  <h2><a href="/2009/11/09/techdays_09_day2.html">TechEd 09 Day2. Deep Dive Into the Serious Stuff</a> <div class="title-date">November  9, 2009</div></h2>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <p><strong>UPDATE: MVC Session and the Welcome drink</strong>  </p>
+
+<p>Day 2 has started. The subway was crowded with developers and IT admins. I&rsquo;ve never seen that much human computing power at once :)  </p>
+
+<p>Be sure to check my <a href="http://www.teebot.be/2009/11/teched-09-day1-20-years-ago-berlin-wall.html">previous post</a> as I&rsquo;m updating it with pictures and videos of the Berlin Wall Fall festivities.  </p>
+
+<p><a href="http://3.bp.blogspot.com/_sMzr7iNm7bs/Svk0nOUb_OI/AAAAAAAAAUI/FsXDEmaDvS0/s1600-h/kristofTeebotSmall.png"><img src="https://3.bp.blogspot.com/_sMzr7iNm7bs/Svk0nOUb_OI/AAAAAAAAAUI/FsXDEmaDvS0/s400/kristofTeebotSmall.png" alt="Kristofteebotsmall" /></a>  </p>
+
+<p><strong>Parallel Computing for Managed Developers</strong>  </p>
+
+<p>The first session of the morning was rather interesting. According to Steve Teixeira (actually he quotes Intel), 80 cores CPU is something reasonable to foresee sometime in the next 5 years.  </p>
+
+<p>Nowaday, multithreading is hard to develop and is very error prone. Starting from .NET 4.0, the framework will include new libraries including <a href="http://msdn.microsoft.com/en-us/magazine/cc163329.aspx">PLINQ</a> and the <a href="http://msdn.microsoft.com/en-us/library/dd460717(VS.100).aspx">Task Parallel Library</a>.  </p>
+
+<p>Here&rsquo;s an interview of Steve explaining why parallel computing is a major shift in the programming world:  </p>
+
+<iframe src="https://channel9.msdn.com/Blogs/Humphrey/Interview-Tech-Ed-2009-Berlin/player" width="960" height="540" allowFullScreen frameBorder="0"></iframe>
+
+<p><strong>VS Team System: A Lap Around the Project Management and Architecture Capabilities</strong>  </p>
+
+<p>Here&rsquo;s a few features that I really enjoyed:  </p>
+
+<p>Reporting from Excel is really easier now. As Brian already mentionned yesterday, they scaled TFS down with Basic Wizards and Simpler Reports but they also scaled it up with many more features like Scrum integration or Architecture validation.  </p>
+
+<p>More importantly everything is now tied together and queriable on a TFS project so as an example we can now directly see all requirements who don&rsquo;t have Test Cases yet.  </p>
+
+<p>On the architect side, we were shown that validation is now really easy to set up. Developers are unable to check in some code that violates the rules defined by the architect.  </p>
+
+<p>If you want to know more about the Project Management in TFS 2010, see <a href="http://blogs.msdn.com/bharry/archive/2009/05/19/tfs-2010-project-management.aspx">Brian&rsquo;s blog</a>.  </p>
+
+<p><strong>Code Walkthrough on Azure</strong>  </p>
+
+<p>That session has a rather self-explanatory title. It was indeed very technical. Our belgian compatriot demoed some code using a <a href="http://msdn.microsoft.com/en-us/library/dd179341.aspx">Worker Role and a Web Role on Azure</a>. All this looks quite impressive. For some reason he used a local machine instead of the real Azure Services, leaving us a little disappointed.  </p>
+
+<p>Speaking of Azure, I found <a href="http://davidpallmann.blogspot.com/2009/07/azure-roi-calculator.html">this nice pricing calculator</a>. Is it me or is Azure just really expensive unless you need dozens of servers?  </p>
+
+<p><strong>What&rsquo;s New in ASP.NET Model-View-Controller</strong>  </p>
+
+<p><a href="http://stephenwalther.com/blog/default.aspx">Stephen Walther</a> first polled the crowded conference room asking who is currently using ASP.NET MVC. To my surprise most of us were.  </p>
+
+<p>So he focused on the new HTML.RenderAction() helper and Areas. Stephen also demoed how validation based on data annotations can be easily bubbled to the client through the Microsoft MVC Ajax scripts.  </p>
+
+<p><strong>Beer as in Free Beer</strong>  </p>
+
+<p>The welcome drink was a huge success, most people attended it and even stayed later that night. I have no idea why those incentives always work.  </p>
+
+<p>That&rsquo;s it for Day 2! (not that I don&rsquo;t remember what happened after the Welcome drink it&rsquo;s jsut not that relevant for this post).</p>
+
+  <h2><a href="/2009/11/09/techdays_09.html">TechEd 09 Day1. Berlin, Here We Come!</a> <div class="title-date">November  9, 2009</div></h2>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <p>So after a 10 hours drive from Brussels, Kristof and I arrived safe and well at the Hotel yesterday. This morning we took the S-bahn metro to the ICC conference center.  </p>
+
+<p>I guess it&rsquo;s not easy to fit 7000 attendees arriving all at once through the same doors. We waited about an hour to get our badge and a techEd bag full of goodies and software bits.  </p>
+
+<p><strong>Helping developers and testers to get along better</strong>  </p>
+
+<p>I&rsquo;m currently attending the DEV206 session titled &ldquo;Team System 2010: A lap around the developer and tester experience&rdquo;.  </p>
+
+<p><img src="https://1.bp.blogspot.com/_sMzr7iNm7bs/Svf0BqaFV1I/AAAAAAAAAT4/CBuSsAUfCYA/s400/PIC131.jpg" alt="Pic131" />  </p>
+
+<p>To summarize this session shortly with a developer bias: What Microsoft mainly did with this release of TFS is to ease the merge process, help developers and testers get along better (sic!) and they made lab testing way easier.  </p>
+
+<p><strong>No More No Repro</strong>  </p>
+
+<p>The most remarkable feature is definitely IntelliTrace which enables developers to track the bugs filled by the testers directly into the code. On top of IntelliTrace, developers from the My Bug pane of Visual Studio can now see a video of what the tester did to reach a bug.  </p>
+
+<p>Brian Harry didn&rsquo;t detail everything as there was so much to cover but apparently there is also a way for the developer to record the bug on his VM and for the developer to replay the bug from the initial machine state.  </p>
+
+<p>From my point of view it looks very promising and I already see a few cases where these tools could help in my current project.  </p>
+
+<p>Stay tuned for more updates from TechEd 09 in Berlin!</p>
+
+  <h2><a href="/2009/08/26/We_Dont_Usually_Know_What_Kind_of_Parents_Had_Our_Grandparents.html">We Don't Usually Know What Kind of Parents Had Our Grandparents</a> <div class="title-date">August 26, 2009</div></h2>
+  <!-- use article.summary(250) if you have Nokogiri available to show just
+       the first 250 characters -->
+  <p>(or How to Retrieve a Type of Parent Control Using an Extension Method)  </p>
+
+<p>Here&rsquo;s a situation where I had to retrieve the next Parent Control of a certain type. In this particular case, my label is included in an UpdatePanel to update only when my Label is assigned a new value.  </p>
+
+<p>I could have used the Parent attributes of my controls and go up a few levels until I have the right one:  </p>
+<pre class="highlight csharp"><code><span class="n">UpdatePanel</span> <span class="n">updatePanel</span> <span class="p">=</span> <span class="n">label</span><span class="p">.</span><span class="n">Parent</span><span class="p">.</span><span class="n">Parent</span><span class="p">;</span>
+<span class="n">updatePanel</span><span class="p">.</span><span class="nf">Update</span><span class="p">();</span>
+</code></pre><pre class="highlight html"><code>The ASP:  
+<span class="nt">&lt;asp:updatepanel</span> <span class="na">id=</span><span class="s">"UpdatePanelMessage"</span> <span class="na">runat=</span><span class="s">"server"</span> <span class="na">updatemode=</span><span class="s">"Conditional"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;contenttemplate&gt;</span>
+
+  <span class="nt">&lt;/contenttemplate&gt;</span>
+<span class="nt">&lt;/asp:updatepanel&gt;</span>
+</code></pre>
+<p><strong>Do you see what&rsquo;s wrong?</strong></p>
+
+<p>And what if the page is modified and the control is included in a new div or in a new panel? You see it coming, the control retrieved won&rsquo;t be an UpdatePanel because we don&rsquo;t usually know what kind of Parents had our Grandparents&hellip;<br>
+So as soon as the asp page structure changes, chances are that casting errors start to appear.  </p>
+
+<p>We need a way to look up that control&rsquo;s ancestry and return the first parent of a certain type. We can achieve that by using the following <a href="http://msdn.microsoft.com/en-us/library/bb383977.aspx">extension method</a>:  </p>
+<pre class="highlight csharp"><code><span class="k">public</span> <span class="k">static</span> <span class="n">Control</span> <span class="nf">GetParentOfType</span><span class="p">(</span><span class="k">this</span> <span class="n">Control</span> <span class="n">childControl</span><span class="p">,</span> <span class="n">Type</span> <span class="n">parentType</span><span class="p">)</span> <span class="p">{</span> 
+  <span class="n">Control</span> <span class="n">parent</span> <span class="p">=</span> <span class="n">childControl</span><span class="p">.</span><span class="n">Parent</span><span class="p">;</span> 
+  <span class="k">while</span><span class="p">(</span><span class="n">parent</span><span class="p">.</span><span class="nf">GetType</span><span class="p">()</span> <span class="p">!=</span> <span class="n">parentType</span><span class="p">)</span> <span class="p">{</span> 
+    <span class="n">parent</span> <span class="p">=</span> <span class="n">parent</span><span class="p">.</span><span class="n">Parent</span><span class="p">;</span> 
+  <span class="p">}</span> 
+  <span class="k">if</span> <span class="p">(</span><span class="n">parent</span><span class="p">.</span><span class="nf">GetType</span><span class="p">()</span> <span class="p">==</span> <span class="n">parentType</span><span class="p">)</span> 
+    <span class="k">return</span> <span class="n">parent</span><span class="p">;</span>  
+
+  <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="s">"No control of expected type was found"</span><span class="p">);</span> 
+<span class="p">}</span>
+</code></pre>
+<p>Now wherever we need to retrieve the first occurence of any control&rsquo;s parent of a certain type we just call the method <code>GetParentOfType</code> this way:  </p>
+<pre class="highlight plaintext"><code>UpdatePanel updatePanel = (UpdatePanel)label.GetParentOfType (typeof(UpdatePanel));
+updatePanel.Update();  
+</code></pre>
+<p><a href="http://www.teebot.be/2009/08/extension-method-to-get-controls-parent.html">CodeProject</a></p>
+
+
+    <div class="page-next"><a href="/page/2/">Next page</a></div>
 
       </div>
     </div>

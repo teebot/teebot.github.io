@@ -1,0 +1,240 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>teebot  - TechEd 09 Day3. Today is Architecture Day!</title>
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/feed.xml" />
+
+    <link href='//fonts.googleapis.com/css?family=Muli:300,400' rel='stylesheet' type='text/css'>
+
+    <link href="/stylesheets/site.css" rel="stylesheet" />
+    <style>
+    .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight {
+  color: #faf6e4;
+  background-color: #122b3b;
+}
+.highlight .gl {
+  color: #dee5e7;
+  background-color: #4e5d62;
+}
+.highlight .c, .highlight .cd, .highlight .cm, .highlight .c1, .highlight .cs {
+  color: #6c8b9f;
+  font-style: italic;
+}
+.highlight .cp {
+  color: #b2fd6d;
+  font-weight: bold;
+  font-style: italic;
+}
+.highlight .err {
+  color: #fefeec;
+  background-color: #cc0000;
+}
+.highlight .gr {
+  color: #fefeec;
+  background-color: #cc0000;
+}
+.highlight .k, .highlight .kd, .highlight .kv {
+  color: #f6dd62;
+  font-weight: bold;
+}
+.highlight .o, .highlight .ow {
+  color: #4df4ff;
+}
+.highlight .p, .highlight .pi {
+  color: #4df4ff;
+}
+.highlight .gd {
+  color: #cc0000;
+}
+.highlight .gi {
+  color: #b2fd6d;
+}
+.highlight .ge {
+  font-style: italic;
+}
+.highlight .gs {
+  font-weight: bold;
+}
+.highlight .gt {
+  color: #dee5e7;
+  background-color: #4e5d62;
+}
+.highlight .kc {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .kn {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .kp {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .kr {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .gh {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .gu {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .kt {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .no {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nc {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nd {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nn {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .bp {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .ne {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nl {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .nt {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mb, .highlight .mx {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .ld {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .ss {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .s, .highlight .sb, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .sr, .highlight .s1 {
+  color: #fff0a6;
+  font-weight: bold;
+}
+.highlight .se {
+  color: #4df4ff;
+  font-weight: bold;
+}
+.highlight .sc {
+  color: #4df4ff;
+  font-weight: bold;
+}
+.highlight .si {
+  color: #4df4ff;
+  font-weight: bold;
+}
+.highlight .nb {
+  font-weight: bold;
+}
+.highlight .ni {
+  color: #999999;
+  font-weight: bold;
+}
+.highlight .w {
+  color: #BBBBBB;
+}
+.highlight .nf {
+  color: #a8e1fe;
+}
+.highlight .py {
+  color: #a8e1fe;
+}
+.highlight .na {
+  color: #a8e1fe;
+}
+.highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi {
+  color: #a8e1fe;
+  font-weight: bold;
+}
+    </style>
+
+    <!--<script src="/javascripts/all.js"></script>-->
+  </head>
+  <body>
+    
+    <div id="wrapper">
+      <aside>
+        <h1><a href="/">teebot</a></h1>
+        <div><a href="/about">About</a></div>
+        <div><a href="https://github.com/teebot/teebot.github.io/issues">Contact</a></div>
+      </aside>
+      <div id="main" role="main">
+        <p>Most sessions Kristof and I will be attending today are part of the Architecture Track.  </p>
+
+<p><strong>Application Models for Utility Computing</strong>  </p>
+
+<p>Ulrich Homann spoke about how SharePoint&rsquo;s Scalability was made with Scale Units in mind for each tier (Database Tier, Middle Tier, Application Tier, Load-Balancing Tier, Storage Tier).  </p>
+
+<p>He then went on discussing how we can layer an application to enable virtualization in the enterprise world. For example, the data tier of an application could be scaled down to 2 or 3 servers at night while the others are going back to the image library. This frees computing resources that can either sleep to save energy or be used for crawling. [See <a href="http://msdn.microsoft.com/en-us/library/dd393307.aspx">Application Patterns for Green IT</a>]  </p>
+
+<p>As Ulrich puts it Mainframe developers already did this 20 years ago. I would add that there is fundamental difference: hardware is a lot cheaper now than it was before, <a href="http://www.codinghorror.com/blog/archives/001198.html">cheaper than hiring programmers</a>.  </p>
+
+<p><strong>The Role of the Software Architect: Caring and Communicating</strong>  </p>
+
+<p>Very interesting talk or should I say open discussion about what exactly is an Architect. Architects should be held more accountable according to Magnus Mårtensson, it&rsquo;s a matter of pride and professionalism. Magnus quoted yoda to make a point about why Architects should not inspire fear to developers because &ldquo;Fear is the path to the dark side. Fear leads to anger. Anger leads to hate. Hate leads to suffering&rdquo;.  </p>
+
+<p><a href="http://3.bp.blogspot.com/_sMzr7iNm7bs/SvrFifnViMI/AAAAAAAAAUY/l17OH8efoyw/s1600-h/yoda2.jpg"><img src="https://3.bp.blogspot.com/_sMzr7iNm7bs/SvrFifnViMI/AAAAAAAAAUY/l17OH8efoyw/s400/yoda2.jpg" alt="Yoda2" /></a>  </p>
+
+<p><strong>Unit Testing Good Practices</strong>  </p>
+
+<p>Roy Osherove is Chief Architect at TypeMock. His presentation was focused on 3 requirements to write good tests: Tests should be trustworthy, maintainable and readable.  </p>
+
+<p>That was definitely the best presentation so far in my opinion. It was technical and straight to the point.  </p>
+
+<p>After developing each of these points, Roy challenged some Microsoft-issued code by looking at their tests (the NerdDinner MVC sample, the Unity project). It was really interesting to see why most of them don&rsquo;t achieve a good readability or are sometimes not relevant enough, especially since I have seen those tests before while learning MVC and found them quite good.  </p>
+
+<p>On the side he often plugged his book &ldquo;The Art of Unit Testing&rdquo; and made a reference to Code Katas. Roy also does Test Code Reviews on <a href="http://weblogs.asp.net/rosherove/archive/2009/10/18/test-review-mef.aspx">his blog</a>.  </p>
+
+<p><a href="http://1.bp.blogspot.com/_sMzr7iNm7bs/SvrPCtre6UI/AAAAAAAAAUg/ljn4uwDuM88/s1600-h/katas-illustration.png"><img src="https://1.bp.blogspot.com/_sMzr7iNm7bs/SvrPCtre6UI/AAAAAAAAAUg/ljn4uwDuM88/s400/katas-illustration.png" alt="Katas illustration" /></a>  </p>
+
+<p>I&rsquo;ll keep a note to talk more about Code Katas on this blog for learning purposes, but for a good explanation check this <a href="http://www.codinghorror.com/blog/archives/001138.html">Jeff Atwood&rsquo;s post</a> who quotes <a href="http://steve-yegge.blogspot.com/">Steve Yegge&rsquo;s blog</a>.  </p>
+
+<p>Also <a href="http://codekata.pragprog.com/2007/01/code_kata_backg.html#more">this</a> appears to be the founding post of code katas which I will quote:  </p>
+
+<blockquote>
+<p>A kata is an exercise in karate where you repeat a form many, many times, making little improvements in each. The intent behind code kata is similar.</p>
+</blockquote>
+
+<p>There is an obvious trend in the development world these days and it&rsquo;s using Ninjas as metaphors for developers: Code Katas, <a href="http://ninject.org/">Ninject</a> the dependency injection library and the <a href="http://www.manning.com/osherove/">cover of Roy&rsquo;s book</a>.  </p>
+
+<p>That&rsquo;s it for today! Stay tuned for Day 4 and Day 5!  </p>
+
+<p><a href="http://2.bp.blogspot.com/_sMzr7iNm7bs/Svr46i1_uMI/AAAAAAAAAUw/sb8kj2-27lQ/s1600-h/KristofUndTeebot.jpg"><img src="https://2.bp.blogspot.com/_sMzr7iNm7bs/Svr46i1_uMI/AAAAAAAAAUw/sb8kj2-27lQ/s400/KristofUndTeebot.jpg" alt="Kristofundteebot" /></a></p>
+
+      </div>
+    </div>
+    <div id="footer">
+      <p>teebot &copy; 2016</p>
+    </div>
+  </body>
+</html>

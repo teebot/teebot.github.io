@@ -5,43 +5,472 @@
   <id>http://blog.url.com/</id>
   <link href="http://blog.url.com/"/>
   <link href="http://blog.url.com/feed.xml" rel="self"/>
-  <updated>2016-10-05T14:47:00+02:00</updated>
+  <updated>2016-11-16T01:00:00+01:00</updated>
   <author>
     <name>Blog Author</name>
   </author>
   <entry>
-    <title>Welcome</title>
-    <link rel="alternate" href="http://blog.url.com/2016/10/05/welcome.html"/>
-    <id>http://blog.url.com/2016/10/05/welcome.html</id>
-    <published>2016-10-05T14:47:00+02:00</published>
-    <updated>2016-10-05T15:14:30+02:00</updated>
+    <title>About this blog</title>
+    <link rel="alternate" href="http://blog.url.com/2016/11/16/whatever.html"/>
+    <id>http://blog.url.com/2016/11/16/whatever.html</id>
+    <published>2016-11-16T01:00:00+01:00</published>
+    <updated>2016-11-16T17:36:26+01:00</updated>
     <author>
       <name>Article Author</name>
     </author>
-    <content type="html">&lt;h3&gt;Welcome&lt;/h3&gt;
+    <content type="html">&lt;p&gt;I briefly had a blog hosted on Blogger from 2009 to 2010 so I thought it&amp;rsquo;d be fun to import these posts from my C# days and use a markdown based site generator on a github page. Jekyll&amp;rsquo;s default design and structure didn&amp;rsquo;t feel right somehow and I opted instead for &lt;a href="https://middlemanapp.com"&gt;middleman&lt;/a&gt; which is also made in Ruby.&lt;/p&gt;
 
-&lt;p&gt;One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. &amp;ldquo;What&amp;rsquo;s happened to me?&amp;rdquo; he thought. &lt;/p&gt;
-
-&lt;p&gt;It wasn&amp;rsquo;t a dream. His room, a proper human room although a little too small, lay peacefully between its four familiar walls. A collection of textile samples lay spread out on the table - Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame. It showed a lady fitted out with a fur hat and fur boa who sat upright, raising a heavy fur muff that covered the whole of her lower arm towards the viewer. Gregor then turned to look out the window at the dull weather.&lt;/p&gt;
+&lt;p&gt;7 years have passed and my job has kept changing in the meantime - from C# to nodeJS and React, from IIS on premise to AWS lambdas, from bash deployment scripts to Docker. I found it pretty interesting to read my past self playing with AJAX and jQuery.&lt;/p&gt;
 </content>
   </entry>
   <entry>
-    <title>Again!</title>
-    <link rel="alternate" href="http://blog.url.com/2016/10/05/again.html"/>
-    <id>http://blog.url.com/2016/10/05/again.html</id>
-    <published>2016-10-05T14:47:00+02:00</published>
-    <updated>2016-11-16T12:35:45+01:00</updated>
+    <title>Lazy Loading Ajax in ASP.NET MVC</title>
+    <link rel="alternate" href="http://blog.url.com/2010/07/22/lazy_loading_ajax.html"/>
+    <id>http://blog.url.com/2010/07/22/lazy_loading_ajax.html</id>
+    <published>2010-07-22T18:30:00+02:00</published>
+    <updated>2016-11-16T16:24:28+01:00</updated>
     <author>
       <name>Article Author</name>
     </author>
-    <content type="html">&lt;h3&gt;He did it again!&lt;/h3&gt;
+    <content type="html">&lt;p&gt;I recently changed jobs and now work for an e-commerce company called &lt;a href="https://www.vente-exclusive.com/"&gt;vente-exclusive.com&lt;/a&gt;. We typically open new sales around 9am in the morning and immediately get a MASSIVE amount of traffic from that moment.&lt;/p&gt;
 
-&lt;p&gt;Now I know what you&amp;rsquo;re thinking. One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. &amp;ldquo;What&amp;rsquo;s happened to me?&amp;rdquo; he thought. &lt;/p&gt;
-&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;my_cool_method&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-  &lt;span class="nb"&gt;puts&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt;
-&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;p&gt;Of course the architecture behind our ASP.NET MVC frontend is made to handle that and we manage to keep a pretty good response time using a mix of caching techniques, content delivery networks and clever programming.&lt;/p&gt;
+
+&lt;p&gt;I was tasked with implementing a new &amp;ldquo;users who bought this also bought&amp;hellip;&amp;rdquo; kind of feature you may see on most e-commerce sites. The processing time and data to load on the page are not negligible and that feature being displayed at the very bottom of the page, we might end up using a lot of additional resources for nothing if the user does not scroll down.&lt;/p&gt;
+
+&lt;p&gt;It was decided that we would display these frequently combined items only if the area where it&amp;rsquo;s supposed to load comes into the user&amp;rsquo;s viewport - that is if it&amp;rsquo;s displayed on the user&amp;rsquo;s screen whether he scrolled down or his screen is big enough to handle the whole page. Amazon uses the technique on its &lt;a href="https://www.amazon.co.uk/"&gt;homepage&lt;/a&gt; (scroll down to the bottom).&lt;/p&gt;
+
+&lt;p&gt;I found a pretty neat jQuery plugin to handle just that, it can be found at:
+&lt;a href="http://remysharp.com/2009/01/26/element-in-view-event-plugin"&gt;http://remysharp.com/2009/01/26/element-in-view-event-plugin&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;frequently-ordered&lt;/code&gt; block has a &lt;code&gt;display:none&lt;/code&gt; property. While remaining invisible it can be attached to an event called &lt;code&gt;inview&lt;/code&gt; that will be triggered only once on the page (hence the &amp;ldquo;.one&amp;rdquo;).&lt;/p&gt;
+&lt;pre class="highlight javascript"&gt;&lt;code&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;ready&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'#frequently-ordered'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;one&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'inview'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;event&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;visible&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;visible&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+          &lt;span class="nx"&gt;loadFrequentlyOrderedProducts&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+      &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="p"&gt;});&lt;/span&gt;
+&lt;span class="p"&gt;});&lt;/span&gt;
+
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;It wasn&amp;rsquo;t a dream. His room, a proper human room although a little too small, lay peacefully between its four familiar walls. A collection of textile samples lay spread out on the table - Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame. It showed a lady fitted out with a fur hat and fur boa who sat upright, raising a heavy fur muff that covered the whole of her lower arm towards the viewer. Gregor then turned to look out the window at the dull weather.&lt;/p&gt;
+&lt;p&gt;The next step is standard MVC Ajax. The &lt;code&gt;loadFrequentlyOrderedProducts&lt;/code&gt; function calls the Controller Action and returns the data from the partial:&lt;/p&gt;
+&lt;pre class="highlight javascript"&gt;&lt;code&gt;
+&lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;loadFrequentlyOrderedProducts&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;page&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'#frequently-ordered'&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;show&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+  &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'/Product/LoadFrequentlyOrderedProducts'&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+  &lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;url&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="na"&gt;productId&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;324&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="na"&gt;saleId&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;234&lt;/span&gt; &lt;span class="p"&gt;},&lt;/span&gt;
+    &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; 
+      &lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'#frequently-ordered'&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;html&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;data&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; 
+    &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The Action would be fairly straightforward:&lt;/p&gt;
+&lt;pre class="highlight csharp"&gt;&lt;code&gt;
+&lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="n"&gt;ActionResult&lt;/span&gt; &lt;span class="nf"&gt;LoadFrequentlyOrderedProducts&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;?&lt;/span&gt; &lt;span class="n"&gt;productId&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;?&lt;/span&gt;&lt;span class="n"&gt;saleId&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;FrequentlyOrderedProductsModel&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; 
+        &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nf"&gt;FrequentlyOrderedProductsModel&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+
+    &lt;span class="c1"&gt;//code omitted for illustration purposes&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nf"&gt;PartialView&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"FrequentlyOrderedProducts"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;model&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;That&amp;rsquo;s an interesting technique for high traffic sites often dealing with a trade-off between high availability and rich dynamic features.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>ASP.NET MVC, Injecting &amp; Mocking an IRepository</title>
+    <link rel="alternate" href="http://blog.url.com/2010/03/03/aspnetmvc_repository_di.html"/>
+    <id>http://blog.url.com/2010/03/03/aspnetmvc_repository_di.html</id>
+    <published>2010-03-03T17:30:00+01:00</published>
+    <updated>2016-11-16T16:01:10+01:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;p&gt;If you are already familiar with ASP.NET MVC, you have probably seen the &lt;a href="http://martinfowler.com/eaaCatalog/repository.html"&gt;repository pattern&lt;/a&gt; in a few examples (such as &lt;a href="http://nerddinnerbook.s3.amazonaws.com/Intro.htm"&gt;NerdDinner&lt;/a&gt;), maybe you even use it in your own app.  &lt;/p&gt;
+
+&lt;p&gt;One of the most frequent way to hot-plug a Repository class into a controller is to use the Strategy Pattern. But while an application evolves, you might want to centrally manage your wiring within a provider, that&amp;rsquo;s what Dependency Injectors are for.&lt;br&gt;
+However lots of Dependency Injectors - or IoC containers at large - such as Unity or Castle Windsor contain a plethora of features and often rely heavily on XML configuration, making them overkill for smaller projects.&lt;br&gt;
+&lt;a href="http://www.ninject.org/"&gt;Ninject&lt;/a&gt; makes it relatively effortless to set up a DI. It just reached version 2.0.  &lt;/p&gt;
+
+&lt;p&gt;In this post we will see how to:  &lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;  Quickly inject a Repository in a controller with Ninject&lt;/li&gt;
+&lt;li&gt;  Mock the IRepository interface in your tests with the Ninject.Moq plugin&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Get the bits&lt;/strong&gt;  &lt;/p&gt;
+
+&lt;p&gt;Here&amp;rsquo;s where to get these dependencies:&lt;br&gt;
+&lt;a href="http://code.google.com/p/moq/downloads/list"&gt;Moq&lt;/a&gt;&lt;br&gt;
+&lt;a href="http://ninject.org/download"&gt;Ninject2 (with Ninject.Web.Mvc)&lt;/a&gt;&lt;br&gt;
+&lt;a href="http://github.com/enkari/ninject.moq"&gt;Ninject.Moq plugin&lt;/a&gt; (download and build)  &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Creating a Simple Repository&lt;/strong&gt;  &lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s start a quick MVC app with a Repository.&lt;br&gt;
+The Winter Olympics provide us with a simple Model composed of the following types:  &lt;/p&gt;
+
+&lt;p&gt;&lt;a href="http://4.bp.blogspot.com/_sMzr7iNm7bs/S46ThH_XOmI/AAAAAAAAAX0/NvwZQcbP4GM/s1600-h/ClassDiagram.png"&gt;&lt;img src="https://4.bp.blogspot.com/_sMzr7iNm7bs/S46ThH_XOmI/AAAAAAAAAX0/NvwZQcbP4GM/s400/ClassDiagram.png" alt="Classdiagram" /&gt;&lt;/a&gt;  &lt;/p&gt;
+
+&lt;p&gt;Our Repository class looks like this:  &lt;/p&gt;
+&lt;pre class="highlight csharp"&gt;&lt;code&gt;&lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Repository&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="n"&gt;IEnumerable&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Athlete&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;Athletes&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;get&lt;/span&gt;
+        &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;FakeDb&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Athletes&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="n"&gt;Athlete&lt;/span&gt; &lt;span class="nf"&gt;GetAthleteByName&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;string&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="kt"&gt;var&lt;/span&gt; &lt;span class="n"&gt;ath&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;from&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="n"&gt;FakeDb&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Athletes&lt;/span&gt;
+                  &lt;span class="k"&gt;where&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;LastName&lt;/span&gt; &lt;span class="p"&gt;==&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;
+                  &lt;span class="k"&gt;select&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;ath&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;Single&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="n"&gt;IEnumerable&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Athlete&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nf"&gt;GetAthletesByDiscipline&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;string&lt;/span&gt; &lt;span class="n"&gt;discipline&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="kt"&gt;var&lt;/span&gt; &lt;span class="n"&gt;ath&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;from&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="n"&gt;FakeDb&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Athletes&lt;/span&gt;
+                  &lt;span class="k"&gt;where&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Discipline&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Name&lt;/span&gt; &lt;span class="p"&gt;==&lt;/span&gt; &lt;span class="n"&gt;discipline&lt;/span&gt;
+                  &lt;span class="k"&gt;select&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;ath&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="n"&gt;IEnumerable&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Athlete&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nf"&gt;GetAthletesByCountry&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;string&lt;/span&gt; &lt;span class="n"&gt;country&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="kt"&gt;var&lt;/span&gt; &lt;span class="n"&gt;ath&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;from&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="n"&gt;FakeDb&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Athletes&lt;/span&gt;
+                  &lt;span class="k"&gt;where&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Country&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Name&lt;/span&gt; &lt;span class="p"&gt;==&lt;/span&gt; &lt;span class="n"&gt;country&lt;/span&gt;
+                  &lt;span class="k"&gt;orderby&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Discipline&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Name&lt;/span&gt;
+                  &lt;span class="k"&gt;select&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;ath&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Of course the first thing we&amp;rsquo;ll do is to extract an IRepository interface from this class. We can at this point create a few Action Methods in an AthletesController to send some data to the view.  &lt;/p&gt;
+&lt;pre class="highlight csharp"&gt;&lt;code&gt;
+&lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="k"&gt;interface&lt;/span&gt; &lt;span class="n"&gt;IRepository&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;IEnumerable&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Athlete&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;Athletes&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="k"&gt;get&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="n"&gt;Athlete&lt;/span&gt; &lt;span class="nf"&gt;GetAthleteByName&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;string&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="n"&gt;IEnumerable&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Athlete&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nf"&gt;GetAthletesByCountry&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;string&lt;/span&gt; &lt;span class="n"&gt;country&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="n"&gt;IEnumerable&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Athlete&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nf"&gt;GetAthletesByDiscipline&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;string&lt;/span&gt; &lt;span class="n"&gt;discipline&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Injecting an IRepository into a Custom Controller&lt;/strong&gt;  &lt;/p&gt;
+
+&lt;p&gt;We&amp;rsquo;ll now create a custom Controller by extending the MVC Controller class. Our extended type will contain our injected IRepository and all our controllers will inherit from it. Notice the [Inject] attribute:  &lt;/p&gt;
+&lt;pre class="highlight csharp"&gt;&lt;code&gt;
+&lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;OlympicsController&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Controller&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;Inject&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="n"&gt;IRepository&lt;/span&gt; &lt;span class="n"&gt;Repository&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We only need two things to set up Ninject and bind the Repository implementation as an IRepository in our controller instance:  &lt;/p&gt;
+
+&lt;p&gt;-First, a &lt;strong&gt;Ninject Module class&lt;/strong&gt; where the binding occurs:  &lt;/p&gt;
+&lt;pre class="highlight csharp"&gt;&lt;code&gt;
+
+&lt;span class="k"&gt;namespace&lt;/span&gt; &lt;span class="nn"&gt;WinterOlympics&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;WebModule&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;NinjectModule&lt;/span&gt;
+  &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="k"&gt;override&lt;/span&gt; &lt;span class="k"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;Load&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+      &lt;span class="p"&gt;{&lt;/span&gt;
+
+
+          &lt;span class="c1"&gt;//Repository injection&lt;/span&gt;
+          &lt;span class="n"&gt;Bind&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;iRepository&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;()&lt;/span&gt;
+              &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;To&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;repository&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;();&lt;/span&gt;
+
+      &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;-Second, we need to change our &lt;span style="font-style: italic;"&gt;Global.asax&lt;/span&gt; so our MvcApplication inherits from &lt;strong&gt;NinjectHttpApplication&lt;/strong&gt; instead. That&amp;rsquo;s also where the override &lt;span style="font-style: italic;"&gt;CreateKernel()&lt;/span&gt; references our binding module. Finally, we&amp;rsquo;ll move the &lt;span style="font-style: italic;"&gt;Application_Start&lt;/span&gt; content under the &lt;span style="font-style: italic;"&gt;OnApplicationStarted&lt;/span&gt; override and call &lt;span style="font-style: italic;"&gt;RegisterAllControllersIn()&lt;/span&gt; with the current assembly as parameter.  &lt;/p&gt;
+&lt;pre class="highlight csharp"&gt;&lt;code&gt;&lt;span class="k"&gt;namespace&lt;/span&gt; &lt;span class="nn"&gt;WinterOlympics&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+
+    &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MvcApplication&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;NinjectHttpApplication&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="k"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;RegisterRoutes&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;RouteCollection&lt;/span&gt; &lt;span class="n"&gt;routes&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;routes&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;IgnoreRoute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"{resource}.axd/{*pathInfo}"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+            &lt;span class="n"&gt;routes&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;MapRoute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+              &lt;span class="s"&gt;"Default"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+              &lt;span class="s"&gt;"{controller}/{action}/{id}"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+              &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="n"&gt;controller&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"Home"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;action&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"Index"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;id&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;""&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+            &lt;span class="p"&gt;);&lt;/span&gt;
+
+        &lt;span class="p"&gt;}&lt;/span&gt;
+
+        &lt;span class="k"&gt;protected&lt;/span&gt; &lt;span class="k"&gt;override&lt;/span&gt; &lt;span class="k"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;OnApplicationStarted&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;AreaRegistration&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;RegisterAllAreas&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+
+            &lt;span class="nf"&gt;RegisterRoutes&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;RouteTable&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Routes&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+            &lt;span class="nf"&gt;RegisterAllControllersIn&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Assembly&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;GetExecutingAssembly&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+
+        &lt;span class="k"&gt;protected&lt;/span&gt; &lt;span class="k"&gt;override&lt;/span&gt; &lt;span class="n"&gt;IKernel&lt;/span&gt; &lt;span class="nf"&gt;CreateKernel&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nf"&gt;StandardKernel&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nf"&gt;WebModule&lt;/span&gt;&lt;span class="p"&gt;());&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Ninject is now set up. At any time during development you can switch your IRepository implementation by changing the bindings of the NinjectModule.  &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Mocking an IRepository with Ninject&lt;/strong&gt;  &lt;/p&gt;
+
+&lt;p&gt;Because our Repository implementation uses some sort of database, we don&amp;rsquo;t want our Unit Tests to depend on it. It is generally recommended to test persistence layers in separate integration tests.  &lt;/p&gt;
+
+&lt;p&gt;For our Unit Tests, we set up a fake IRepository implementation with Moq.&lt;br&gt;
+The Ninject.Moq plugin integrates our mock in our controller by using a &lt;span style="font-style: italic;"&gt;MockingKernel&lt;/span&gt; (as opposed to the StandardKernel previously seen in our &lt;span style="font-style: italic;"&gt;Global.asax&lt;/span&gt;).  &lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s create a test context in which we set up the mocked injection.&lt;br&gt;
+Notice how the kernel injects a mock in the controller and how we&amp;rsquo;re then able to retrieve the mock to set it up.  &lt;/p&gt;
+&lt;pre class="highlight csharp"&gt;&lt;code&gt;&lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;AthletesControllerContext&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;protected&lt;/span&gt; &lt;span class="k"&gt;readonly&lt;/span&gt; &lt;span class="n"&gt;MockingKernel&lt;/span&gt; &lt;span class="n"&gt;kernel&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;protected&lt;/span&gt; &lt;span class="k"&gt;readonly&lt;/span&gt; &lt;span class="n"&gt;AthletesController&lt;/span&gt; &lt;span class="n"&gt;controller&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;protected&lt;/span&gt; &lt;span class="k"&gt;readonly&lt;/span&gt; &lt;span class="n"&gt;Mock&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;irepository&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;repositoryMock&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="nf"&gt;AthletesControllerContext&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;kernel&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nf"&gt;MockingKernel&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+        &lt;span class="n"&gt;controller&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nf"&gt;AthletesController&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+        &lt;span class="c1"&gt;//inject a mock of IRepository in the controller &lt;/span&gt;
+        &lt;span class="n"&gt;kernel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;Inject&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;controller&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;repositoryMock&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Mock&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;Get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;controller&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Repository&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+        &lt;span class="c1"&gt;//setup mocks&lt;/span&gt;
+        &lt;span class="n"&gt;Athlete&lt;/span&gt; &lt;span class="n"&gt;mockAthlete&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nf"&gt;Athlete&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+        &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;BirthDate&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nf"&gt;DateTime&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="m"&gt;1980&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="m"&gt;26&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+            &lt;span class="n"&gt;Discipline&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nf"&gt;Discipline&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+            &lt;span class="p"&gt;{&lt;/span&gt;
+                &lt;span class="n"&gt;Name&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"curling"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="n"&gt;IsPlayedInTeams&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;true&lt;/span&gt;
+            &lt;span class="p"&gt;},&lt;/span&gt;
+            &lt;span class="n"&gt;Country&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nf"&gt;Country&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="n"&gt;Name&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"Luxemburg"&lt;/span&gt; &lt;span class="p"&gt;},&lt;/span&gt;
+            &lt;span class="n"&gt;FirstName&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"tee"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="n"&gt;LastName&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;"bot"&lt;/span&gt;
+        &lt;span class="p"&gt;};&lt;/span&gt;
+        &lt;span class="n"&gt;repositoryMock&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;Setup&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Athletes&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nf"&gt;Returns&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="n"&gt;mockAthlete&lt;/span&gt; &lt;span class="p"&gt;});&lt;/span&gt;
+        &lt;span class="n"&gt;repositoryMock&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;Setup&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;GetAthletesByCountry&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"Luxemburg"&lt;/span&gt;&lt;span class="p"&gt;)).&lt;/span&gt;&lt;span class="nf"&gt;Returns&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="n"&gt;mockAthlete&lt;/span&gt; &lt;span class="p"&gt;});&lt;/span&gt;
+        &lt;span class="n"&gt;repositoryMock&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;Setup&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;GetAthletesByDiscipline&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"curling"&lt;/span&gt;&lt;span class="p"&gt;)).&lt;/span&gt;&lt;span class="nf"&gt;Returns&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;new&lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="n"&gt;mockAthlete&lt;/span&gt; &lt;span class="p"&gt;});&lt;/span&gt;
+        &lt;span class="n"&gt;repositoryMock&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;Setup&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="p"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;GetAthleteByName&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"teebot"&lt;/span&gt;&lt;span class="p"&gt;)).&lt;/span&gt;&lt;span class="nf"&gt;Returns&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mockAthlete&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;[Thanks to &lt;a href="http://miguelmadero.blogspot.com/"&gt;Miguel Madero&lt;/a&gt; for &lt;a href="http://groups.google.com/group/ninject/browse_thread/thread/00b002be89027fe9/77a5de8fbf599438?#77a5de8fbf599438"&gt;helping me&lt;/a&gt; figure out this last part]  &lt;/p&gt;
+
+&lt;p&gt;Our test class inherits from this context and our test methods mimic the behavior of the application, goal achieved.  &lt;/p&gt;
+&lt;pre class="highlight csharp"&gt;&lt;code&gt;
+&lt;span class="na"&gt;[TestClass]&lt;/span&gt;
+&lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;AthletesControllerTest&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;AthletesControllerContext&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;TestMethod&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="k"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;Index_Returns_NotNull_ViewResult_With_Data&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="c1"&gt;//Act&lt;/span&gt;
+        &lt;span class="n"&gt;ViewResult&lt;/span&gt; &lt;span class="n"&gt;res&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;controller&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;Index&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;ViewResult&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+        &lt;span class="c1"&gt;//Assert&lt;/span&gt;
+        &lt;span class="n"&gt;Assert&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;IsNotNull&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;res&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ViewData&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;TestMethod&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="k"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;Detail_Returns_ViewResult_With_Data&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="c1"&gt;//Act&lt;/span&gt;
+        &lt;span class="n"&gt;ViewResult&lt;/span&gt; &lt;span class="n"&gt;res&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;controller&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;Detail&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"teebot"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;ViewResult&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+        &lt;span class="c1"&gt;//Assert&lt;/span&gt;
+        &lt;span class="n"&gt;Assert&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;IsNotNull&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;res&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ViewData&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="n"&gt;Assert&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;IsInstanceOfType&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;res&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ViewData&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Model&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;typeof&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Athlete&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+
+    &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;TestMethod&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="k"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;Detail_Returns_NotFound_View_For_NonExisting&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="c1"&gt;//Act&lt;/span&gt;
+        &lt;span class="n"&gt;ViewResult&lt;/span&gt; &lt;span class="n"&gt;res&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;controller&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;Detail&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"nonexisting"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;ViewResult&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+        &lt;span class="c1"&gt;//Assert&lt;/span&gt;
+        &lt;span class="n"&gt;Assert&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;AreEqual&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;"NotFound"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;res&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ViewName&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a href="http://dev.teebot.be/blog/downloads/WinterOlympics.zip"&gt;Download Sample Code&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;[Requires &lt;a href="http://msdn.microsoft.com/en-us/vstudio/dd582936.aspx"&gt;Visual Studio 2010 RC&lt;/a&gt; / &lt;a href="http://aspnet.codeplex.com/releases/view/39978"&gt;ASP.NET MVC2 RC2&lt;/a&gt;]  &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Wrapping Up&lt;/strong&gt;  &lt;/p&gt;
+
+&lt;p&gt;In this post we saw how to inject our Repository implementation as an IRepository member of the controller.  &lt;/p&gt;
+
+&lt;p&gt;Finally we switched our implementation for a mocked Repository in our tests.  &lt;/p&gt;
+
+&lt;p&gt;We clearly saw a case for injection as our application is now loosely coupled and our MVC is testable. We could switch from a database to an XML file as persistence layer without affecting the client or the tests.  &lt;/p&gt;
+
+&lt;p&gt;TeeBots-NET-Blog-ASPNET-MVC-Mocking-the-Repository-with-NinjectMoq)&lt;br&gt;
+&lt;a href="http://www.teebot.be/2010/03/aspnet-mvc-and-ninject-repository.html"&gt;CodeProject&lt;/a&gt;&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Setting AD Properties using the new AccountManagement API</title>
+    <link rel="alternate" href="http://blog.url.com/2009/11/16/setting_ad_properties.html"/>
+    <id>http://blog.url.com/2009/11/16/setting_ad_properties.html</id>
+    <published>2009-11-16T17:30:00+01:00</published>
+    <updated>2016-11-16T16:02:00+01:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;p&gt;So I&amp;rsquo;m currently programming a lightweight utility to manage LDAP objects and I came to use the new &lt;a href="http://msdn.microsoft.com/en-us/library/system.directoryservices.accountmanagement.aspx"&gt;AccountManagement API&lt;/a&gt; introduced in .NET 3.5 because it&amp;rsquo;s way easier and more object-oriented than &lt;a href="http://msdn.microsoft.com/en-us/library/system.directoryservices.aspx"&gt;DirectoryServices&lt;/a&gt;.  &lt;/p&gt;
+
+&lt;p&gt;This new namespace, as I see it, is just provided as a friendlier way to query an LDAP server and is actually built on top of the plain DirectoryServices bits. And it shows&amp;hellip; For example you have to dispose all objects performing a search (FindIdentity) or as Gary Caldwell &lt;a href="http://msdn.microsoft.com/en-us/library/bb345628.aspx"&gt;puts it&lt;/a&gt;:  &lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;This call has an unmanaged memory leak because the underlying implemenation uses DirectorySearcher and SearchResultsCollection but does not call dispose on the SearchResultsCollection as the document describes.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Also, because AccountManagement is not as close to the metal as DirectoryServices you can only control whatever Microsoft chose to expose in the API.  &lt;/p&gt;
+
+&lt;p&gt;However a fantastic feature of AccountManagement is the ability to fall back on a DirectoryServices object whenever you need to because the underlying object of any Principal is exposed through GetUnderlyingObject().  &lt;/p&gt;
+&lt;pre class="highlight csharp"&gt;&lt;code&gt;&lt;span class="n"&gt;DirectoryEntry&lt;/span&gt; &lt;span class="n"&gt;entry&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;DirectoryEntry&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;principal&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;GetUnderlyingObject&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;With that much power in our hands we can now use this to set some properties unexposed by AccountManagement. Here&amp;rsquo;s a generic method I made to set LDAP properties on any Principal (users, groups, computers):  &lt;/p&gt;
+&lt;pre class="highlight csharp"&gt;&lt;code&gt;&lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="k"&gt;void&lt;/span&gt; &lt;span class="n"&gt;SetCustomProperty&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;(&lt;/span&gt;&lt;span class="kt"&gt;string&lt;/span&gt; &lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;string&lt;/span&gt; &lt;span class="k"&gt;value&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;T&lt;/span&gt; &lt;span class="n"&gt;principal&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+ &lt;span class="k"&gt;where&lt;/span&gt; &lt;span class="n"&gt;T&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Principal&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+ &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;principal&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;GetUnderlyingObjectType&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;==&lt;/span&gt; &lt;span class="k"&gt;typeof&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;DirectoryEntry&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+   &lt;span class="n"&gt;DirectoryEntry&lt;/span&gt; &lt;span class="n"&gt;entry&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;DirectoryEntry&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;principal&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;GetUnderlyingObject&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+   &lt;span class="n"&gt;entry&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Properties&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;].&lt;/span&gt;&lt;span class="n"&gt;Value&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;value&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+   &lt;span class="k"&gt;try&lt;/span&gt;
+   &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="n"&gt;entry&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;CommitChanges&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+   &lt;span class="p"&gt;}&lt;/span&gt;
+   &lt;span class="k"&gt;catch&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Exception&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+   &lt;span class="p"&gt;{&lt;/span&gt;
+
+      &lt;span class="kt"&gt;string&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; 
+      &lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;Format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;@"Could not set custom property {0} to value {1} for object {2}"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
+      &lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;value&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;principal&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Name&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+      &lt;span class="k"&gt;throw&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nf"&gt;Exception&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+   &lt;span class="p"&gt;}&lt;/span&gt;
+ &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Use it like this:  &lt;/p&gt;
+&lt;pre class="highlight csharp"&gt;&lt;code&gt;&lt;span class="n"&gt;SetCustomProperty&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;userprincipal&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;(&lt;/span&gt;&lt;span class="s"&gt;"streetAddress"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;"21 jumpstreet"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;userPrincipal&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Being user-friendly while keeping control? I&amp;rsquo;m starting to like that little guy.  &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;UPDATE: As an anonymous commenter pointed out, there&amp;rsquo;s a way to actually map an AD attribute to a property of a class inheriting UserPrincipal. The technique consists of decorating the property with the attribute &lt;span style="font-style: italic;"&gt;DirectoryProperty&lt;/span&gt; and the field name as parameter (as seen &lt;a href="http://msdn.microsoft.com/en-us/magazine/cc135979.aspx#S10"&gt;here&lt;/a&gt;).&lt;/strong&gt;  &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE: code indentation is messy in the examples. I need to fix something in my snippet tool.&lt;/strong&gt;  &lt;/p&gt;
+
+&lt;p&gt;&lt;a href="http://www.teebot.be/2009/12/ad-setting-custom-properties-using-new.html"&gt;CodeProject&lt;/a&gt;&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>TechEd 09 Day5. Lucky Friday Thirteenth</title>
+    <link rel="alternate" href="http://blog.url.com/2009/11/12/techdays_09_day5.html"/>
+    <id>http://blog.url.com/2009/11/12/techdays_09_day5.html</id>
+    <published>2009-11-12T17:30:00+01:00</published>
+    <updated>2016-11-16T14:52:52+01:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;p&gt;Today is the last day of TechEd.  &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;A SharePoint Pattern Language&lt;/strong&gt;  &lt;/p&gt;
+
+&lt;p&gt;Non-Microsoft speaker Jim Wilt first made the assumption that we&amp;rsquo;re feeling like if our brains were about to leak through our ears. Good guess Jim!&lt;br&gt;
+He is presenting us an offshoot of the work he&amp;rsquo;s doing for Microsoft. He won&amp;rsquo;t be able to tell us everything about it as it is still pure research at this time.  &lt;/p&gt;
+
+&lt;p&gt;There is a necessity to document SharePoint solutions that are repeatable, extensible, and reliable. But should we have a SharePoint specific pattern-language?  &lt;/p&gt;
+
+&lt;p&gt;Jim thinks so because there are SharePoint specific concepts to take into account:  &lt;/p&gt;
+
+&lt;p&gt;First the application level: component, solution site or template levels.&lt;br&gt;
+And secondly the tools to use: Out-of-Box, SharePoint Designer or Visual Studio.  &lt;/p&gt;
+
+&lt;p&gt;The demo pattern was &lt;em&gt;Collecting anonymous user data securely&lt;/em&gt;. In this example, the pattern sits at the solution site level using out-of-box and SharePoint Designer.  &lt;/p&gt;
+
+&lt;p&gt;Jim thanked us for attending this session at 9am on the last day.&lt;br&gt;
+A repository of SharePoint Patterns would be a great addition (at another level) to the &lt;a href="http://www.codeplex.com/spg"&gt;existing SharePoint Guidance&lt;/a&gt;.  &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Rest of the Day&lt;/strong&gt;  &lt;/p&gt;
+
+&lt;p&gt;After that session, I spent some time at the Visual Studio booth. I spoke a little with Marian Luparu, Visual C++ Program Manager who reminded me that Microsoft is basically a C++ factory.  &lt;/p&gt;
+
+&lt;p&gt;The last session I&amp;rsquo;ll be attending is about &lt;a href="http://msdn.microsoft.com/en-us/devlabs/cc950525.aspx"&gt;Pex&lt;/a&gt; and &lt;a href="http://research.microsoft.com/en-us/projects/contracts/"&gt;Code Contracts&lt;/a&gt;, which to me are the most interesting additions to .NET 4 and VS2010. I wonder how the automated test generation tool works.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>TechEd 09 Day4. Dynamic Morning</title>
+    <link rel="alternate" href="http://blog.url.com/2009/11/11/techdays_09_day4.html"/>
+    <id>http://blog.url.com/2009/11/11/techdays_09_day4.html</id>
+    <published>2009-11-11T17:30:00+01:00</published>
+    <updated>2016-11-16T14:50:09+01:00</updated>
+    <author>
+      <name>Article Author</name>
+    </author>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Developing a Language with the Dynamic Language Runtime&lt;/strong&gt;  &lt;/p&gt;
+
+&lt;p&gt;&lt;a href="http://devhawk.net/"&gt;Harry Pierson&lt;/a&gt; aknowledges that developing your own language is not a very common scenario. This session was a deep dive into the bit crunching stuff and the implementation behind the new DLR library which extends the CLR&amp;rsquo;s cross-language support to dynamic languages. With IronPython and IronRuby gaining in popularity it was interesting to see how Microsoft actually architectured those changes in new libraries, improved the performance of dynamic languages while no major changes had to be made in the CLR.  &lt;/p&gt;
+
+&lt;p&gt;For those who want to dive even deeper into the DLR, the code is open sourced on &lt;a href="http://dlr.codeplex.com/"&gt;codeplex&lt;/a&gt;.  &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Dynamic in Microsoft Visual C# 4.0: The Why&amp;rsquo;s and How&amp;rsquo;s&lt;/strong&gt;  &lt;/p&gt;
+
+&lt;p&gt;The HOW was covered in details by Harry already. Alex Turner first exposed the implementation choices behind the adventures of C# in the dynamic world. In the end the dynamic keyword is &lt;a href="http://msdn.microsoft.com/en-us/library/dd264736(VS.100).aspx"&gt;used as a type&lt;/a&gt; (but it&amp;rsquo;s more than a type).  &lt;/p&gt;
+
+&lt;p&gt;So WHY use dynamic at all? In which cases de we actually need some code that will be interpreted at runtime instead of compiling it in the IL?  &lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Use code from dynamic languages (or being a better citizen in the .NET world)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Talk to dynamic object models such as the HTML DOM or Silverlight&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Code more naturally with Interop COM interfaces (think Office Dev)&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src="https://2.bp.blogspot.com/_sMzr7iNm7bs/Svwxx0IQ4cI/AAAAAAAAAU4/xLJILQk2Cog/s400/image_3.png" alt="Image 3" /&gt;  &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Architecture Discovery and Validation with Visual Studio 2010&lt;/strong&gt;  &lt;/p&gt;
+
+&lt;p&gt;Peter Provost demonstrated the new tools for Architects available in VS2010 Ultimate. VS 2010 feels more and more like a complete standalone software factory since the inclusion of the UML modeling tool.  &lt;/p&gt;
+
+&lt;p&gt;To try to understand existing code, the code Analysis tools can provide a valuable help. For the demo, Peter imported a big solution containing 30 projects and went on exploring it using the Architecture Explorer with class diagrams and the new filters. What impressed me the most was the Sequence Diagram Generation.  &lt;/p&gt;
+
+&lt;p&gt;&lt;a href="http://1.bp.blogspot.com/_sMzr7iNm7bs/Svw6jmO8h6I/AAAAAAAAAVA/7eosT3nKK0k/s1600-h/image_thumb%5B19%5D.png"&gt;&lt;img src="https://1.bp.blogspot.com/_sMzr7iNm7bs/Svw6jmO8h6I/AAAAAAAAAVA/7eosT3nKK0k/s400/image_thumb%5B19%5D.png" alt="Image thumb%5b19%5d" /&gt;&lt;/a&gt;  &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Book Shop&lt;/strong&gt;  &lt;/p&gt;
+
+&lt;p&gt;At the end of the day I stopped by the TechEd book shop. I often ask to architects if they know about some good books with a bit of theory illustrated by stories from the trenches. I think I finally found what I&amp;rsquo;m looking for: Microsoft .NET Architecting Applications for the Enterprise.  &lt;/p&gt;
+
+&lt;p&gt;&lt;a href="http://3.bp.blogspot.com/_sMzr7iNm7bs/SvyT7-_NBdI/AAAAAAAAAVI/WqWYKX-bndQ/s1600-h/9780735626096F.gif"&gt;&lt;img src="https://3.bp.blogspot.com/_sMzr7iNm7bs/SvyT7-_NBdI/AAAAAAAAAVI/WqWYKX-bndQ/s400/9780735626096F.gif" alt="9780735626096f" /&gt;&lt;/a&gt;  &lt;/p&gt;
+
+&lt;p&gt;As this guy puts it in a review: &lt;em&gt;&amp;ldquo;A .NET developer looking to move into architecture should make this book their first stop on a long journey&amp;rdquo;&lt;/em&gt;.&lt;/p&gt;
 </content>
   </entry>
 </feed>

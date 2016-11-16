@@ -1,0 +1,247 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>teebot  - Lazy Loading Ajax in ASP.NET MVC</title>
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/feed.xml" />
+
+    <link href='//fonts.googleapis.com/css?family=Muli:300,400' rel='stylesheet' type='text/css'>
+
+    <link href="/stylesheets/site.css" rel="stylesheet" />
+    <style>
+    .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight {
+  color: #faf6e4;
+  background-color: #122b3b;
+}
+.highlight .gl {
+  color: #dee5e7;
+  background-color: #4e5d62;
+}
+.highlight .c, .highlight .cd, .highlight .cm, .highlight .c1, .highlight .cs {
+  color: #6c8b9f;
+  font-style: italic;
+}
+.highlight .cp {
+  color: #b2fd6d;
+  font-weight: bold;
+  font-style: italic;
+}
+.highlight .err {
+  color: #fefeec;
+  background-color: #cc0000;
+}
+.highlight .gr {
+  color: #fefeec;
+  background-color: #cc0000;
+}
+.highlight .k, .highlight .kd, .highlight .kv {
+  color: #f6dd62;
+  font-weight: bold;
+}
+.highlight .o, .highlight .ow {
+  color: #4df4ff;
+}
+.highlight .p, .highlight .pi {
+  color: #4df4ff;
+}
+.highlight .gd {
+  color: #cc0000;
+}
+.highlight .gi {
+  color: #b2fd6d;
+}
+.highlight .ge {
+  font-style: italic;
+}
+.highlight .gs {
+  font-weight: bold;
+}
+.highlight .gt {
+  color: #dee5e7;
+  background-color: #4e5d62;
+}
+.highlight .kc {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .kn {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .kp {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .kr {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .gh {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .gu {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .kt {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .no {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nc {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nd {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nn {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .bp {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .ne {
+  color: #b2fd6d;
+  font-weight: bold;
+}
+.highlight .nl {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .nt {
+  color: #ffb000;
+  font-weight: bold;
+}
+.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mb, .highlight .mx {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .ld {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .ss {
+  color: #f696db;
+  font-weight: bold;
+}
+.highlight .s, .highlight .sb, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .sr, .highlight .s1 {
+  color: #fff0a6;
+  font-weight: bold;
+}
+.highlight .se {
+  color: #4df4ff;
+  font-weight: bold;
+}
+.highlight .sc {
+  color: #4df4ff;
+  font-weight: bold;
+}
+.highlight .si {
+  color: #4df4ff;
+  font-weight: bold;
+}
+.highlight .nb {
+  font-weight: bold;
+}
+.highlight .ni {
+  color: #999999;
+  font-weight: bold;
+}
+.highlight .w {
+  color: #BBBBBB;
+}
+.highlight .nf {
+  color: #a8e1fe;
+}
+.highlight .py {
+  color: #a8e1fe;
+}
+.highlight .na {
+  color: #a8e1fe;
+}
+.highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi {
+  color: #a8e1fe;
+  font-weight: bold;
+}
+    </style>
+
+    <!--<script src="/javascripts/all.js"></script>-->
+  </head>
+  <body>
+    
+    <div id="wrapper">
+      <aside>
+        <h1><a href="/">teebot</a></h1>
+        <div><a href="/about">About</a></div>
+        <div><a href="https://github.com/teebot/teebot.github.io/issues">Contact</a></div>
+      </aside>
+      <div id="main" role="main">
+        <p>I recently changed jobs and now work for an e-commerce company called <a href="https://www.vente-exclusive.com/">vente-exclusive.com</a>. We typically open new sales around 9am in the morning and immediately get a MASSIVE amount of traffic from that moment.</p>
+
+<p>Of course the architecture behind our ASP.NET MVC frontend is made to handle that and we manage to keep a pretty good response time using a mix of caching techniques, content delivery networks and clever programming.</p>
+
+<p>I was tasked with implementing a new &ldquo;users who bought this also bought&hellip;&rdquo; kind of feature you may see on most e-commerce sites. The processing time and data to load on the page are not negligible and that feature being displayed at the very bottom of the page, we might end up using a lot of additional resources for nothing if the user does not scroll down.</p>
+
+<p>It was decided that we would display these frequently combined items only if the area where it&rsquo;s supposed to load comes into the user&rsquo;s viewport - that is if it&rsquo;s displayed on the user&rsquo;s screen whether he scrolled down or his screen is big enough to handle the whole page. Amazon uses the technique on its <a href="https://www.amazon.co.uk/">homepage</a> (scroll down to the bottom).</p>
+
+<p>I found a pretty neat jQuery plugin to handle just that, it can be found at:
+<a href="http://remysharp.com/2009/01/26/element-in-view-event-plugin">http://remysharp.com/2009/01/26/element-in-view-event-plugin</a></p>
+
+<p>The <code>frequently-ordered</code> block has a <code>display:none</code> property. While remaining invisible it can be attached to an event called <code>inview</code> that will be triggered only once on the page (hence the &ldquo;.one&rdquo;).</p>
+<pre class="highlight javascript"><code><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">'#frequently-ordered'</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">one</span><span class="p">(</span><span class="s1">'inview'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">visible</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">visible</span><span class="p">)</span> <span class="p">{</span>
+          <span class="nx">loadFrequentlyOrderedProducts</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+      <span class="p">}</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+
+</code></pre>
+<p>The next step is standard MVC Ajax. The <code>loadFrequentlyOrderedProducts</code> function calls the Controller Action and returns the data from the partial:</p>
+<pre class="highlight javascript"><code>
+<span class="kd">function</span> <span class="nx">loadFrequentlyOrderedProducts</span><span class="p">(</span><span class="nx">page</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">'#frequently-ordered'</span><span class="p">).</span><span class="nx">show</span><span class="p">();</span>
+  <span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s1">'/Product/LoadFrequentlyOrderedProducts'</span><span class="p">;</span>
+
+  <span class="nx">$</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="p">{</span> <span class="na">productId</span><span class="p">:</span> <span class="mi">324</span><span class="p">,</span> <span class="na">saleId</span><span class="p">:</span> <span class="mi">234</span> <span class="p">},</span>
+    <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span> 
+      <span class="nx">$</span><span class="p">(</span><span class="s1">'#frequently-ordered'</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span> 
+    <span class="p">}</span>
+  <span class="p">);</span>
+<span class="p">};</span>
+
+</code></pre>
+<p>The Action would be fairly straightforward:</p>
+<pre class="highlight csharp"><code>
+<span class="k">public</span> <span class="n">ActionResult</span> <span class="nf">LoadFrequentlyOrderedProducts</span><span class="p">(</span><span class="kt">int</span><span class="p">?</span> <span class="n">productId</span><span class="p">,</span> <span class="kt">int</span><span class="p">?</span><span class="n">saleId</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">FrequentlyOrderedProductsModel</span> <span class="n">model</span> <span class="p">=</span> 
+        <span class="k">new</span> <span class="nf">FrequentlyOrderedProductsModel</span><span class="p">();</span>
+
+    <span class="c1">//code omitted for illustration purposes</span>
+    <span class="k">return</span> <span class="nf">PartialView</span><span class="p">(</span><span class="s">"FrequentlyOrderedProducts"</span><span class="p">,</span> <span class="n">model</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre>
+<p>That&rsquo;s an interesting technique for high traffic sites often dealing with a trade-off between high availability and rich dynamic features.</p>
+
+      </div>
+    </div>
+    <div id="footer">
+      <p>teebot &copy; 2016</p>
+    </div>
+  </body>
+</html>
